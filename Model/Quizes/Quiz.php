@@ -2,12 +2,13 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 namespace Egulias\QuizBundle\Model\Quizes;
 
+use Egulias\QuizBundle\Model\Questions\Question;
 /**
  * Declaration of abstract class Quiz to allow the creation of multiple types of quizes
  *
  * @author Eduardo Gulias Davis <me@egulias.com>
  */
-class Quiz implements QuizInterface
+abstract class Quiz implements QuizInterface
 {
     /**
      * To store quiz questions
@@ -30,7 +31,7 @@ class Quiz implements QuizInterface
      */
     public function addQuestion(Question $q)
     {
-        $this->question->attach($q);
+        $this->questions->attach($q);
         return $this;
     }
 
@@ -38,7 +39,13 @@ class Quiz implements QuizInterface
     {
         return $this->questions;
     }
-
+    /**
+     * Returns a single question from $this->questions
+     *
+     * @return Question
+     *
+     */
+    abstract public function getQuestion();
 }
 
 ?>

@@ -7,18 +7,11 @@ namespace Egulias\QuizBundle\Model\Questions;
  *
  * @author Eduardo Gulias Davis <me@egulias.com>
  */
-class Question
+abstract class Question
 {
     protected $name = '';
+    protected $text = '';
 
-    public function __construct($name = '')
-    {
-        if($name)$this->setName($name);
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
+    abstract public function setText($text);
+    abstract public function getText();
 }

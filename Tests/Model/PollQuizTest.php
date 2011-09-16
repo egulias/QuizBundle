@@ -5,16 +5,25 @@ namespace Egulias\QuizBundle\Tests\Model;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase,
     Egulias\QuizBundle\Model\Quizes\Poll,
-    Egulias\QuizBundle\Model\Questions\YesNoQuestion
+    Egulias\QuizBundle\Model\Questions\YesNoQuestion,
+    Egulias\QuizBundle\Model\Questions\Question
 ;
 
 class PollQuizTest extends WebTestCase
 {
-    public function testPollAddSingleQuestion()
+    public function testPollAddQuestion()
+    {
+        $p = new Poll;
+        $q = new YesNoQuestion('Are you sure');
+        $p->addQuestion($q);
+        $this->assertEquals($q,$p->getQuestion());
+
+    }
+    public function testPollHasSingleQuestion()
     {
         $p = new Poll;
         $p->addQuestion(new YesNoQuestion('Are you Sure?'));
         $p->addQuestion(new YesNoQuestion('Second Question'));
-        $this->assertCount(1,$p->getQuestions());
+        $this->assertTrue((1==count($p->getQuestions()->count())));
     }
 }

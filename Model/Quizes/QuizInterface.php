@@ -2,6 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 namespace Egulias\QuizBundle\Model\Quizes;
 
+use Egulias\QuizBundle\Model\Questions\Question;
 /**
  *
  * @author Eduardo Gulias Davis <me@egulias.com>
