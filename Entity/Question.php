@@ -3,7 +3,8 @@
 namespace Egulias\QuizBundle\Entity;
 
 use
-    Egulias\QuizBundle\Model\Questions\Question as BaseQuestion
+    Egulias\QuizBundle\Model\Questions\Question as BaseQuestion,
+    Doctrine\ORM\Mapping as ORM
 ;
 
 /**
@@ -27,15 +28,48 @@ class Question extends BaseQuestion
     protected $name;
 
     /**
-     *
      *  @ORM\Column(type="string")
      */
     protected $text;
+
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    public function getText()
+    {
+        return $this->text;
+    }
+
     /**
+     * Get id
      *
-     * @ORM\ManyToOne(TargetEntity="Quiz", inversedBy="Question")
-     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
-     *
+     * @return integer
      */
-    protected $Quiz;
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
 }

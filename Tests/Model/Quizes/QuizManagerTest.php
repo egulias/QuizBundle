@@ -9,14 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase,
     Egulias\QuizBundle\Model\Questions\Question
 ;
 
-class YesNoQuestionTest extends WebTestCase
+class QuizManagerTest
 {
-
-    public function testYesNoQuestionText()
+    public function testCreateQuiz()
     {
-        $q = new YesNoQuestion();
-        $q->setText('The Question');
-        $this->assertEquals('The Question', $q->getText());
-    }
 
+    }
 }
+

@@ -2,6 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 namespace Egulias\QuizBundle\Model\Questions;
 
+use Egulias\QuizBundle\Model\Answers\Answer;
 /**
  * Simple yes or no question
  *
@@ -30,5 +31,16 @@ class YesNoQuestion extends Question
     {
         $this->name = $name;
         return $this;
+    }
+
+    public function addAnswer(Answer $a)
+    {
+        $this->answer = $a;
+        return $this;
+    }
+
+    public function getAnswer()
+    {
+        return $this->answer;
     }
 }

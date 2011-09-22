@@ -4,17 +4,18 @@ namespace Egulias\QuizBundle\Entity;
 
 use
     Egulias\QuizBundle\Model\Questions\YesNoQuestion,
-    Egulias\QuizBundle\Model\Quizes\Poll as BaseQuiz,
+    Egulias\QuizBundle\Model\Quizes\Quiz as BaseQuiz,
     Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ORM\Mapping as ORM
 ;
+
 
 /**
  *
  * @ORM\Entity
  * @ORM\Table (name="Quiz")
  */
-class Poll extends BaseQuiz
+class Quiz extends BaseQuiz
 {
 
     /**
@@ -27,9 +28,7 @@ class Poll extends BaseQuiz
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
-
-
+    protected $type = 'Quiz';
 
     /**
      * Get id

@@ -12,16 +12,17 @@ abstract class Quiz implements QuizInterface
 {
     /**
      * To store quiz questions
-     * @var $question SplObjectStorage
-     * @see SplObjectStorage
+     * @var $question array
      */
     protected $questions = Null;
 
     protected $name = '';
 
+    protected $type = 'Quiz';
+
     public function __construct()
     {
-        $this->questions = new \SplObjectStorage();
+        $this->questions = array();
     }
     /**
      * Add a question to the quiz
@@ -31,7 +32,7 @@ abstract class Quiz implements QuizInterface
      */
     public function addQuestion(Question $q)
     {
-        $this->questions->attach($q);
+        $this->questions[] = $q;
         return $this;
     }
 
@@ -39,13 +40,16 @@ abstract class Quiz implements QuizInterface
     {
         return $this->questions;
     }
-    /**
-     * Returns a single question from $this->questions
-     *
-     * @return Question
-     *
-     */
-    abstract public function getQuestion();
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
 }
 
 ?>

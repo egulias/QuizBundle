@@ -11,4 +11,5 @@ interface QuizInterface
 {
     public function addQuestion(Question $q);
     public function getQuestions();
+    public function getType();
 }

@@ -22,12 +22,7 @@ class Poll extends Quiz
 
     public function addQuestion(Question $q)
     {
-        parent::addQuestion($q);
-        if($this->questions->count() > 1)
-        {
-            $this->questions->rewind();
-            $this->questions->detach($this->questions->current());
-        }
+        $this->questions[0] = $q;
         return $this;
     }
 
@@ -43,7 +38,6 @@ class Poll extends Quiz
      */
     public function getQuestion()
     {
-        $this->questions->rewind();
-        return $this->questions->current();
+        return $this->questions[0];
     }
 }
