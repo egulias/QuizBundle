@@ -1,1 +1,17 @@
+{% extends 'EguliasQuizBundle::layout.html.twig' %}
+
+{% block extra_js %}
+        <script src="{{ asset ('bundles/eguliasquiz/js/quiz_control.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<form action="{{ path('egulias_quiz_save')}}" method="POST" {{ form_enctype(form)}} >
 {{ form_widget(form) }}
+<a href='#' class='addQuestion' >Add a Question</a>
+<table id='questions_table'>
+</table>
+<input type='submit' />
+</form>
+{% endblock %}
+
+

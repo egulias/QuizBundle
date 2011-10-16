@@ -3,6 +3,7 @@
 namespace Egulias\QuizBundle\Model\Quizes;
 
 use Egulias\QuizBundle\Model\Questions\Question;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Declaration of abstract class Quiz to allow the creation of multiple types of quizes
  *
@@ -14,15 +15,17 @@ abstract class Quiz implements QuizInterface
      * To store quiz questions
      * @var $question array
      */
-    protected $questions = Null;
+    protected $questions = array();
 
     protected $name = '';
 
     protected $type = 'Quiz';
 
+    protected $uuid = '';
+
     public function __construct()
     {
-        $this->questions = array();
+        $this->questions = new ArrayCollection;
     }
     /**
      * Add a question to the quiz
@@ -49,6 +52,16 @@ abstract class Quiz implements QuizInterface
     public function getType()
     {
         return $this->type;
+    }
+
+    protected function setUUID()
+    {
+        return uniqid('QuizBundle',TRUE);
+    }
+
+    public function getUUID()
+    {
+        return $this->uuid;
     }
 }
 

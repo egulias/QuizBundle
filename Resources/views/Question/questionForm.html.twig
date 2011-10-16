@@ -1,0 +1,23 @@
+{% extends 'EguliasQuizBundle::layout.html.twig' %}
+
+{% block extra_js %}
+        <script src="{{ asset ('bundles/eguliasquiz/js/question.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<form action="{{ path('egulias_question_save')}}" method="POST" {{ form_enctype(form)}} >
+<p>New Question</p>
+<table>
+  <tr>
+    <td>
+      {{ form_widget(form) }}
+      <span style='display:none' class='add_options'><a href='#'>+</a></span>
+    </td>
+  </tr>
+  <div style='display:none' class='question_options'>
+  {#{ form_widget(optionsForm) }#}
+  </div>
+</table>
+<input type='submit' />
+</form>
+{% endblock %}

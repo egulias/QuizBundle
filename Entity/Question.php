@@ -6,11 +6,12 @@ use
     Egulias\QuizBundle\Model\Questions\Question as BaseQuestion,
     Doctrine\ORM\Mapping as ORM
 ;
+use Egulias\QuizBundle\Model\Answers\Answer as BaseAnswer;
 
 /**
  *
  * @ORM\Entity
- * @ORM\Table (name="Question")
+ * @ORM\Table (name="question")
  */
 class Question extends BaseQuestion
 {
@@ -28,9 +29,16 @@ class Question extends BaseQuestion
     protected $name;
 
     /**
-     *  @ORM\Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $text;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $type = 'text';
+
+    //protected $answer;
 
     public function setText($text)
     {
@@ -72,4 +80,25 @@ class Question extends BaseQuestion
         return $this->name;
     }
 
+
+    public function setType($type)
+    {
+        $this->type;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function addAnswer(BaseAnswer $answer)
+    {
+        $this->answer[] = $answer;
+        return $this;
+    }
+
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
 }

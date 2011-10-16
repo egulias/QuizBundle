@@ -5,7 +5,6 @@ namespace Egulias\QuizBundle\Entity;
 use
     Egulias\QuizBundle\Model\Questions\YesNoQuestion,
     Egulias\QuizBundle\Model\Quizes\Quiz as BaseQuiz,
-    Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ORM\Mapping as ORM
 ;
 
@@ -13,7 +12,7 @@ use
 /**
  *
  * @ORM\Entity
- * @ORM\Table (name="Quiz")
+ * @ORM\Table (name="quiz")
  */
 class Quiz extends BaseQuiz
 {
@@ -28,7 +27,18 @@ class Quiz extends BaseQuiz
     /**
      * @ORM\Column(type="string", length=255)
      */
+    protected $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Question")
+     */
+    protected $questions;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     protected $type = 'Quiz';
+
 
     /**
      * Get id
@@ -59,5 +69,6 @@ class Quiz extends BaseQuiz
     {
         return $this->name;
     }
+
 
 }
