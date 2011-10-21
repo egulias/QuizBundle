@@ -21,23 +21,27 @@ class QuizController extends Controller
      */
     public function controlPanelAction()
     {
-        //    $poll = new Poll();
-        //  $question = new YesNoQuestion();
-        //$question->setText('yes no question');
-        //  $poll->addQuestion($question);
-        $quizForm = $this->get('form.factory')->create(new QuizFormType());
-        return $this->render('EguliasQuizBundle:Quiz:index.html.twig', array('form' => $quizForm->createView()));
+        $quizes = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz')->findAll();
+        return $this->render('EguliasQuizBundle:Quiz:index.html.twig', array('quizes' => $quizes));
     }
 
     /**
-     * Create a Quiz
+     *
+     *
+     * @Route("/quiz/add", name="egulias_quiz_add")
+     */
+    public function addAction()
+    {
+        $quizForm = $this->get('form.factory')->create(new QuizFormType());
+        return $this->render('EguliasQuizBundle:Quiz:add_quiz.html.twig', array('form' => $quizForm->createView()));
+    }
+    /**
+     * Save a Quiz
      * @Route ("/quiz/save", name="egulias_quiz_save")
      */
     public function saveQuizAction()
     {
         $em = $this->get('doctrine')->getEntityManager();
-        //$quizForm = $this->get('form.factory')->create(new QuizFormType());
-        //$quizForm->bindRequest($this->get('request'));
         $request = $this->get('request');
         $quizData = $request->get('quiz');
         $questions = $request->get('questions');
@@ -53,6 +57,20 @@ class QuizController extends Controller
         $em->flush();
         return $this->redirect($this->generateUrl('egulias_quiz_panel'));
 
+    }
+
+
+    /**
+     * Modify a Quiz
+     * @Route ("/quiz/{id}/modify", requirements={"id" = "\d+"} ,name="egulias_quiz_modify")
+     */
+    public function modifyQuizAction($id)
+    {
+        $repo = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz');
+        $quiz = $repo->findOneBy(array('id' => $id));
+        $form = $this->get('form.factory')->create(new QuizFormType());
+        $form->setData($quiz);
+        return $this->render('EguliasQuizBundle:Quiz:add_quiz.html.twig', array('form' => $form->createView()));
     }
 
 }

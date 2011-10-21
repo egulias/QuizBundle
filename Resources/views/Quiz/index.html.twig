@@ -1,17 +1,30 @@
 {% extends 'EguliasQuizBundle::layout.html.twig' %}
 
 {% block extra_js %}
-        <script src="{{ asset ('bundles/eguliasquiz/js/quiz_control.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('egulias_quiz_save')}}" method="POST" {{ form_enctype(form)}} >
-{{ form_widget(form) }}
-<a href='#' class='addQuestion' >Add a Question</a>
-<table id='questions_table'>
+<table>
+<p><a href="{{ path('egulias_quiz_add') }}">Add Quiz</a></p>
+  <thead>
+    <th>Quiz Name</th>
+    <th>Questions</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+  {% for quiz  in quizes  %}
+    <tr>
+      <td>{{ quiz.name  }}</td>
+      <td>
+      {% for question in quiz.questions  %}
+        {{ question.name }},
+      {% endfor %}
+      </td>
+      <td><a href="{{ path('egulias_quiz_modify', {'id':quiz.id}) }}">Modify</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
 </table>
-<input type='submit' />
-</form>
 {% endblock %}
 
 

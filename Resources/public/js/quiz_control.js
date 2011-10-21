@@ -3,7 +3,7 @@ $(function(){
   //add Question
   $('a.addQuestion').click(function(e){
     e.stopPropagation();
-    $.get('quiz/add/question',function(data){
+    $.get($(this).attr('href'),function(data){
       n = $('.question_form').length;
       qTable.append(data);
 
@@ -12,6 +12,7 @@ $(function(){
       });
 
     });
+    return false;
   });
 
 });
