@@ -3,11 +3,10 @@
 namespace Egulias\QuizBundle\Entity;
 
 use
-    Egulias\QuizBundle\Model\Questions\YesNoQuestion,
     Egulias\QuizBundle\Model\Quizes\Quiz as BaseQuiz,
     Doctrine\ORM\Mapping as ORM
 ;
-
+use Doctrine\Common\Util\Debug;
 
 /**
  *
@@ -30,7 +29,7 @@ class Quiz extends BaseQuiz
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Question")
+     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="quiz")
      */
     protected $questions;
 
@@ -70,5 +69,17 @@ class Quiz extends BaseQuiz
         return $this->name;
     }
 
+    /**
+     *
+     * @see Quiz
+     */
+    public function setQuestions($questions)
+    {
+        foreach($questions as $question) {
+            //parent::addQuestion($question);
+            $this->questions->add($question['question']);
+        }
+        return $this;
+    }
 
 }

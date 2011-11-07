@@ -14,7 +14,7 @@ class QuestionsListFormType extends AbstractType
     {
         $this->builder = $builder;
             $builder
-                ->add('questions', 'entity', array(
+                ->add('question', 'entity', array(
                     'required' => TRUE,
                     'class'    => 'EguliasQuizBundle:Question'
                 ))
@@ -23,13 +23,13 @@ class QuestionsListFormType extends AbstractType
 
     public function getName()
     {
-        return 'questions';
+        return 'question';
     }
 
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Egulias\QuizBundle\Entity\Question',
+            //'data_class' => 'Egulias\QuizBundle\Entity\Question',
             'csrf_protection'  => FALSE
         );
     }

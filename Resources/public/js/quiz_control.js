@@ -5,10 +5,11 @@ $(function(){
     e.stopPropagation();
     $.get($(this).attr('href'),function(data){
       n = $('.question_form').length;
+      n += $("#quiz_questions").children("div").length;
       qTable.append(data);
 
-      $('#questions_table').find('#questions_questions').each(function(i){
-        $(this).attr('id', 'question_'+n).addClass('question_form').attr('name','questions['+n+']');
+      $('#questions_table').find('#question_question').each(function(i){
+        $(this).attr('id', 'question_'+n).addClass('question_form').attr('name','quiz[questions]['+n+'][question]');
       });
 
     });

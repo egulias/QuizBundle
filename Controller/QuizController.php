@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
 
 use Egulias\QuizBundle\Form\Type\QuizFormType;
 use Egulias\QuizBundle\Entity\Quiz;
+use Egulias\QuizBundle\Entity\QuizQuestion;
 
 class QuizController extends Controller
 {
@@ -43,17 +44,18 @@ class QuizController extends Controller
     {
         $em = $this->get('doctrine')->getEntityManager();
         $request = $this->get('request');
-        $quizData = $request->get('quiz');
-        $questions = $request->get('questions');
-        $quiz = new Quiz();
-        $quiz->setName($quizData['name']);
-        foreach($questions as $qId) {
-            $q = $em->getRepository('EguliasQuizBundle:Question')->findOneBy(array('id' => $qId));
-            $quiz->addQuestion($q);
-        }
+        $form = $this->get('form.factory')->create(new QuizFormType());
+        $form->bindRequest($request);
+        $quiz = $form->getData();
         $em->persist($quiz);
-        //$em->persist($quizForm->getData());
-
+        $q = $quiz->getQuestions();
+        foreach($q as $key => $question)
+        {
+            $qq = new QuizQuestion;
+            $qq->setQuiz($quiz);
+            $qq->setQuestion($question);
+            $em->persist($qq);
+        }
         $em->flush();
         return $this->redirect($this->generateUrl('egulias_quiz_panel'));
 
@@ -61,18 +63,54 @@ class QuizController extends Controller
 
 
     /**
-     * Modify a Quiz
-     * @Route ("/quiz/{id}/modify", requirements={"id" = "\d+"} ,name="egulias_quiz_modify")
+     * Edit a Quiz
+     * @Route ("/quiz/{id}/edit", requirements={"id" = "\d+"} ,name="egulias_quiz_edit")
      */
-    public function modifyQuizAction($id)
+    public function editQuizAction($id)
     {
         $repo = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz');
         $quiz = $repo->findOneBy(array('id' => $id));
         $form = $this->get('form.factory')->create(new QuizFormType());
         $form->setData($quiz);
-        return $this->render('EguliasQuizBundle:Quiz:add_quiz.html.twig', array('form' => $form->createView()));
+        return $this->render('EguliasQuizBundle:Quiz:update_quiz.html.twig', array('form' => $form->createView(), 'id' =>
+        $id));
     }
 
+    /**
+     * Update a Quiz
+     * @Route ("/quiz/{id}/update", requirements={"id" = "\d+"}, name="egulias_quiz_update")
+     */
+    public function updateQuizAction($id)
+    {
+        $repo = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz');
+        $quiz = $repo->findOneBy(array('id' => $id));
+        $request = $this->get('request');
+        $form = $this->get('form.factory')->create(new QuizFormType());
+        $form->bindRequest($request);
+        $em = $this->get('doctrine')->getEntityManager();
+
+        $em->persist($form->getData());
+        $q = $form->getData()->getQuestions();
+        $quizQuestions = $em->getRepository('EguliasQuizBundle:QuizQuestion')->findBy(array('quiz' => $quiz->getId()));
+        foreach ($quizQuestions as $key => $qq) {
+            if($q[$key] != $qq->getQuestion()) {
+                $qq->setQuestion($q[$key]);
+                $em->persist($qq);
+            }
+        }
+        foreach($q as $key => $question)
+        {
+            if(!isset($quizQuestions[$key])) {
+                $qq = new QuizQuestion;
+                $qq->setQuiz($quiz);
+                $qq->setQuestion($question);
+                $em->persist($qq);
+            }
+        }
+        $em->flush();
+        return $this->render('EguliasQuizBundle:Quiz:update_quiz.html.twig', array('form' => $form->createView(), 'id'
+            => $id));
+    }
 }
 
 

@@ -5,7 +5,7 @@ namespace Egulias\QuizBundle\Form\Type;
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilder,
     Egulias\QuizBundle\Model\Quizes\Quiz,
-    Egulias\QuizBundle\Form\Type\QuestionFormType
+    Egulias\QuizBundle\Form\Type\QuestionsListFormType
 ;
 
 class QuizFormType extends AbstractType
@@ -20,10 +20,14 @@ class QuizFormType extends AbstractType
                 'required' => TRUE,
                 'trim'     => TRUE
             ));
-            $builder->add('questions', 'collection');
-        if($options['data']['existing']) {
-        }
-
+        $builder->add('questions', 'collection', array(
+            'type' => new QuestionsListFormType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'prototype' => true,
+            'by_reference' => false
+            )
+        );
     }
 
     public function getDefaultOptions(array $options)

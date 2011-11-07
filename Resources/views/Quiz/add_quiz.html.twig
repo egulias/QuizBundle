@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('egulias_quiz_save')}}" method="POST" {{ form_enctype(form)}} >
+<form action="{% block form_action %} {{ path('egulias_quiz_save')}} {% endblock %}" method="POST" {{ form_enctype(form)}} >
 {{ form_widget(form) }}
 {#{ form_widget(form.question) }#}
 <a href="{{ path('egulias_quiz_add_question')}}" class='addQuestion' >Add a Question</a>

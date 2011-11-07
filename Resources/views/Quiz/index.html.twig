@@ -17,10 +17,10 @@
       <td>{{ quiz.name  }}</td>
       <td>
       {% for question in quiz.questions  %}
-        {{ question.name }},
+        {{ question.question.name }},
       {% endfor %}
       </td>
-      <td><a href="{{ path('egulias_quiz_modify', {'id':quiz.id}) }}">Modify</a></td>
+      <td><a href="{{ path('egulias_quiz_edit', {'id':quiz.id}) }}">Modify</a></td>
     </tr>
   {% endfor %}
   </tbody>

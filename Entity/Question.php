@@ -4,7 +4,8 @@ namespace Egulias\QuizBundle\Entity;
 
 use
     Egulias\QuizBundle\Model\Questions\Question as BaseQuestion,
-    Doctrine\ORM\Mapping as ORM
+    Doctrine\ORM\Mapping as ORM,
+    Doctrine\Common\Collections\ArrayCollection
 ;
 use Egulias\QuizBundle\Model\Answers\Answer as BaseAnswer;
 
@@ -24,6 +25,10 @@ class Question extends BaseQuestion
     protected $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="question")
+     */
+    protected $quizes;
+    /**
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
@@ -38,8 +43,11 @@ class Question extends BaseQuestion
      */
     protected $type = 'text';
 
-    //protected $answer;
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->quizes = new ArrayCollection;
+    }
     public function setText($text)
     {
         $this->text = $text;
@@ -97,6 +105,10 @@ class Question extends BaseQuestion
         return $this;
     }
 
+    /*public function getQuestion()
+    {
+        return $this;
+    }*/
     public function getAnswer()
     {
         return $this->answer;
