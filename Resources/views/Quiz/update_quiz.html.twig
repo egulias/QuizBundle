@@ -1,0 +1,3 @@
+{% extends 'EguliasQuizBundle:Quiz:add_quiz.html.twig' %}
+
+{% block form_action %} {{ path('egulias_quiz_update', {'id':id})}} {% endblock %}

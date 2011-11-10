@@ -4,17 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="egulias_quiz.example.class">Egulias\QuizBundle\Example</parameter>
+        <parameter key="egulias_quiz_entity.class">Egulias\QuizBundle\Form\Manager\QuizFormManager</parameter>
     </parameters>
 
     <services>
-        <service id="egulias_quiz.example" class="%egulias_quiz.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="egulias.quiz.manager" class="%egulias_quiz_entity.class%" scope="request">
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="form.factory" />
         </service>
     </services>
-    -->
 </container>

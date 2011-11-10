@@ -44,6 +44,15 @@ abstract class Quiz implements QuizInterface
         return $this->questions;
     }
 
+    public function getQuestion($n = NULL)
+    {
+        if(is_null($n)) {
+            $cur = $this->questions->current();
+            $this->questions->next();
+            return $cur;
+        }
+        else return $this->questions[$n];
+    }
     public function setType($type)
     {
         $this->type = $type;

@@ -54,6 +54,4 @@ class QuizQuestion
         $this->question = $question;
         return $this;
     }
-
-
  }

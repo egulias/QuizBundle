@@ -17,8 +17,14 @@ class QuestionsListFormType extends AbstractType
                 ->add('question', 'entity', array(
                     'required' => TRUE,
                     'class'    => 'EguliasQuizBundle:Question'
-                ))
-                ;
+                    )
+                )
+                ->add('delete', 'checkbox', array(
+                    'label'             => 'Delete Question',
+                    'required'          => false,
+                    'property_path'     => false
+                    )
+                );
     }
 
     public function getName()

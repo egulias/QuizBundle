@@ -33,7 +33,8 @@ class QuizController extends Controller
      */
     public function addAction()
     {
-        $quizForm = $this->get('form.factory')->create(new QuizFormType());
+        //$quizForm = $this->get('form.factory')->create(new QuizFormType());
+        $quizForm = $this->get('egulias.quiz.manager')->getQuizForm();
         return $this->render('EguliasQuizBundle:Quiz:add_quiz.html.twig', array('form' => $quizForm->createView()));
     }
     /**
@@ -42,21 +43,7 @@ class QuizController extends Controller
      */
     public function saveQuizAction()
     {
-        $em = $this->get('doctrine')->getEntityManager();
-        $request = $this->get('request');
-        $form = $this->get('form.factory')->create(new QuizFormType());
-        $form->bindRequest($request);
-        $quiz = $form->getData();
-        $em->persist($quiz);
-        $q = $quiz->getQuestions();
-        foreach($q as $key => $question)
-        {
-            $qq = new QuizQuestion;
-            $qq->setQuiz($quiz);
-            $qq->setQuestion($question);
-            $em->persist($qq);
-        }
-        $em->flush();
+        $quizForm = $this->get('egulias.quiz.manager')->saveQuizForm();
         return $this->redirect($this->generateUrl('egulias_quiz_panel'));
 
     }
@@ -68,10 +55,7 @@ class QuizController extends Controller
      */
     public function editQuizAction($id)
     {
-        $repo = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz');
-        $quiz = $repo->findOneBy(array('id' => $id));
-        $form = $this->get('form.factory')->create(new QuizFormType());
-        $form->setData($quiz);
+        $form = $this->get('egulias.quiz.manager')->editQuizForm($id);
         return $this->render('EguliasQuizBundle:Quiz:update_quiz.html.twig', array('form' => $form->createView(), 'id' =>
         $id));
     }
@@ -82,32 +66,7 @@ class QuizController extends Controller
      */
     public function updateQuizAction($id)
     {
-        $repo = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz');
-        $quiz = $repo->findOneBy(array('id' => $id));
-        $request = $this->get('request');
-        $form = $this->get('form.factory')->create(new QuizFormType());
-        $form->bindRequest($request);
-        $em = $this->get('doctrine')->getEntityManager();
-
-        $em->persist($form->getData());
-        $q = $form->getData()->getQuestions();
-        $quizQuestions = $em->getRepository('EguliasQuizBundle:QuizQuestion')->findBy(array('quiz' => $quiz->getId()));
-        foreach ($quizQuestions as $key => $qq) {
-            if($q[$key] != $qq->getQuestion()) {
-                $qq->setQuestion($q[$key]);
-                $em->persist($qq);
-            }
-        }
-        foreach($q as $key => $question)
-        {
-            if(!isset($quizQuestions[$key])) {
-                $qq = new QuizQuestion;
-                $qq->setQuiz($quiz);
-                $qq->setQuestion($question);
-                $em->persist($qq);
-            }
-        }
-        $em->flush();
+        $form = $this->get('egulias.quiz.manager')->updateQuizForm($id);
         return $this->render('EguliasQuizBundle:Quiz:update_quiz.html.twig', array('form' => $form->createView(), 'id'
             => $id));
     }
