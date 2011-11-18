@@ -4,24 +4,27 @@ namespace Egulias\QuizBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilder,
-    Egulias\QuizBundle\Model\Quizes\Quiz,
-    Egulias\QuizBundle\Form\Type\QuestionsListFormType
+    Egulias\QuizBundle\Entity\QuizQuestions,
+    Egulias\QuizBundle\Form\Type\AnswerFormType,
+    Egulias\QuizBundle\Form\Type\QuestionsAnswersFormType,
+    Egulias\QuizBundle\Model\Quizes\Quiz
 ;
 
-class QuizFormType extends AbstractType
+class GenericQuizFormType extends AbstractType
 {
+    protected $builder = null;
+    protected $qQuestions = array();
     protected $quiz = null;
 
+    public function __construct($qQuestions)
+    {
+        $this->qQuestions = $qQuestions;
+    }
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder
-            ->add('name', 'text', array(
-                'label' => 'Name',
-                'required' => TRUE,
-                'trim'     => TRUE
-            ));
+        $this->builder = $builder;
         $builder->add('questions', 'collection', array(
-            'type' => new QuestionsListFormType(),
+            'type' => new QuestionsAnswersFormType(),
             'allow_add' => true,
             'allow_delete' => false,
             'prototype' => false,
@@ -30,15 +33,15 @@ class QuizFormType extends AbstractType
         );
     }
 
+    public function getName()
+    {
+        return 'generic_quiz';
+    }
+
     public function getDefaultOptions(array $options)
     {
         return array(
             'data_class' => 'Egulias\QuizBundle\Entity\Quiz'
         );
-    }
-
-    public function getName()
-    {
-        return 'quiz';
     }
 }

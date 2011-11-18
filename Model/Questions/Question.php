@@ -23,7 +23,6 @@ abstract class Question
     protected $name = '';
     protected $text = '';
     protected $answer = null;
-    protected $form = null;
 
 
     abstract public function setText($text);
@@ -31,12 +30,11 @@ abstract class Question
     abstract public function setType($type);
     abstract public function getType();
 
-    abstract public function addAnswer(Answer $answer);
-    abstract public function getAnswer();
+//    abstract public function setAnswer(Answer $answer);
+//    abstract public function getAnswer();
 
     public function __construct()
     {
-        $this->answer = new ArrayCollection();
     }
 
     public static function getBaseTypes()
@@ -49,15 +47,6 @@ abstract class Question
             self::CHOICE    => self::CHOICE,
         );
         return $t;
-    }
-
-    /**
-     *  Allows the Questions to have different options
-     *  @param QuestionOption $qOption
-     *  @return Question
-     */
-    public function addOption($qOption)
-    {
     }
 
     public function __toString()

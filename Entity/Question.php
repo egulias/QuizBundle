@@ -43,6 +43,11 @@ class Question extends BaseQuestion
      */
     protected $type = 'text';
 
+    /**
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="quiz_question")
+     */
+    protected $answer;
+
     public function __construct()
     {
         parent::__construct();
@@ -99,18 +104,4 @@ class Question extends BaseQuestion
         return $this->type;
     }
 
-    public function addAnswer(BaseAnswer $answer)
-    {
-        $this->answer[] = $answer;
-        return $this;
-    }
-
-    /*public function getQuestion()
-    {
-        return $this;
-    }*/
-    public function getAnswer()
-    {
-        return $this->answer;
-    }
 }

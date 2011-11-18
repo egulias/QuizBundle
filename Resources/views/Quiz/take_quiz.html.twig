@@ -1,0 +1,6 @@
+  Do ththee Quiz {{quiz.name}}
+<form action="{% block form_action %} {{ path('egulias_quiz_save_response',{'id':quiz.id})}} {% endblock %}" method="POST" {{
+  form_enctype(quizForm)}} >
+{{form_widget(quizForm)}}
+<input type='submit' value='Save Response' />
+</form>

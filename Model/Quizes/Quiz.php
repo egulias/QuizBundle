@@ -26,6 +26,7 @@ abstract class Quiz implements QuizInterface
     public function __construct()
     {
         $this->questions = new ArrayCollection;
+        $this->setUUID();
     }
     /**
      * Add a question to the quiz
@@ -65,11 +66,15 @@ abstract class Quiz implements QuizInterface
 
     protected function setUUID()
     {
-        return uniqid('QuizBundle',TRUE);
+        if(!$this->uuid) {
+            $this->uuid = SHA1(uniqid('Q',TRUE));
+        }
+        return $this;
     }
 
     public function getUUID()
     {
+        $this->setUUID();
         return $this->uuid;
     }
 }

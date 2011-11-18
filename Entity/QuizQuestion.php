@@ -32,6 +32,24 @@ class QuizQuestion
      */
     protected $question;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="quiz_question")
+     */
+    protected $answers;
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = intval($id);
+    }
 
     public function getQuiz()
     {
@@ -53,5 +71,32 @@ class QuizQuestion
     {
         $this->question = $question;
         return $this;
+    }
+
+    public function setAnswers(ArrayCollection $answers)
+    {
+        $this->answers = $answers;
+        return $this;
+    }
+
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+    public function getAnswer($uuid = '')
+    {
+        return $this->answers->current();
+    }
+
+    public function setAnswer(Answer $answer)
+    {
+        $this->answers->add($answer);
+        return $this;
+    }
+
+    public function __toString()
+    {
+        $label = $this->getQuestion();
+        return 'Quiz Question';
     }
  }

@@ -20,7 +20,10 @@
         {{ question.question.name }},
       {% endfor %}
       </td>
-      <td><a href="{{ path('egulias_quiz_edit', {'id':quiz.id}) }}">Modify</a></td>
+      <td>
+        <a href="{{ path('egulias_quiz_edit', {'id':quiz.id}) }}">Modify</a>|
+        <a href="{{ path('egulias_quiz_take', {'id':quiz.id}) }}">Take</a>
+      </td>
     </tr>
   {% endfor %}
   </tbody>

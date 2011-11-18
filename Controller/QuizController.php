@@ -10,66 +10,60 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Doctrine\Common\Util\Debug
 ;
 
-use Egulias\QuizBundle\Form\Type\QuizFormType;
 use Egulias\QuizBundle\Entity\Quiz;
+use Egulias\QuizBundle\Entity\Answer;
 use Egulias\QuizBundle\Entity\QuizQuestion;
+use Egulias\QuizBundle\Form\Type\GenericQuizFormType as QuizForm;
+use Egulias\QuizBundle\Form\Type\AnswerFormType as AnswerForm;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class QuizController extends Controller
 {
     /**
-     * Quizes control panel
-     * @Route("/quiz", name="egulias_quiz_panel")
+     * Quizes to be done!
+     * @Route("/take/quiz/{id}",requirements={"id" = "\d+"} ,name="egulias_quiz_take")
      */
-    public function controlPanelAction()
+    public function takeQuizAction($id)
     {
-        $quizes = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz')->findAll();
-        return $this->render('EguliasQuizBundle:Quiz:index.html.twig', array('quizes' => $quizes));
+        $quiz = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id'=> $id));
+
+        $questions = $quiz->getQuestions();
+        foreach($questions as $question) {
+            $question->setAnswer(new Answer);
+        }
+
+        $form = $this->get('form.factory')->create(new QuizForm($quiz->getQuestions()), $quiz);
+        return $this->render('EguliasQuizBundle:Quiz:take_quiz.html.twig', array('quizForm' => $form->createView(),
+            'quiz' => $quiz));
     }
 
     /**
-     *
-     *
-     * @Route("/quiz/add", name="egulias_quiz_add")
+     * Quizes responses
+     * @Route("/quiz/{id}/response",requirements={"id" = "\d+"} , name="egulias_quiz_save_response")
      */
-    public function addAction()
+    public function saveResponseAction($id)
     {
-        //$quizForm = $this->get('form.factory')->create(new QuizFormType());
-        $quizForm = $this->get('egulias.quiz.manager')->getQuizForm();
-        return $this->render('EguliasQuizBundle:Quiz:add_quiz.html.twig', array('form' => $quizForm->createView()));
-    }
-    /**
-     * Save a Quiz
-     * @Route ("/quiz/save", name="egulias_quiz_save")
-     */
-    public function saveQuizAction()
-    {
-        $quizForm = $this->get('egulias.quiz.manager')->saveQuizForm();
-        return $this->redirect($this->generateUrl('egulias_quiz_panel'));
+        $request = $this->get('request');
+        $em = $this->get('doctrine')->getEntityManager();
+        $quiz = $em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id'=> $id));
 
-    }
+        $uuid = $quiz->getUUID();
+        $form = $this->get('form.factory')->create(new QuizForm($quiz->getQuestions()));
+        $form->bindRequest($request);
 
+        $qQuestions = $form->getData()->getQuestions();
+        foreach ($qQuestions as  $qq) {
+            $formAnswer = $qq->getAnswer();
+            $quizQuestion = $em->getRepository('EguliasQuizBundle:QuizQuestion')->findOneBy(array('id' =>
+                $qq->getId()));
+            $formAnswer->setQuizUuid($uuid);
+            $formAnswer->setQuizQuestion($quizQuestion);
+            $em->persist($formAnswer);
 
-    /**
-     * Edit a Quiz
-     * @Route ("/quiz/{id}/edit", requirements={"id" = "\d+"} ,name="egulias_quiz_edit")
-     */
-    public function editQuizAction($id)
-    {
-        $form = $this->get('egulias.quiz.manager')->editQuizForm($id);
-        return $this->render('EguliasQuizBundle:Quiz:update_quiz.html.twig', array('form' => $form->createView(), 'id' =>
-        $id));
-    }
-
-    /**
-     * Update a Quiz
-     * @Route ("/quiz/{id}/update", requirements={"id" = "\d+"}, name="egulias_quiz_update")
-     */
-    public function updateQuizAction($id)
-    {
-        $form = $this->get('egulias.quiz.manager')->updateQuizForm($id);
-        return $this->render('EguliasQuizBundle:Quiz:update_quiz.html.twig', array('form' => $form->createView(), 'id'
-            => $id));
+        }
+        $em->flush();
+        return $this->render('EguliasQuizBundle:Quiz:take_quiz.html.twig', array('quizForm' => $form->createView(),
+            'quiz' => $quiz));
     }
 }
-
 
