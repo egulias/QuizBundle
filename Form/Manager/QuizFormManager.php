@@ -37,16 +37,16 @@ class QuizFormManager
     }
 
     /**
-     *  Saves the quiz and its questions
+     * Saves the quiz and its questions
      *
-     *  @return mixed FALSE | QuizFormType
+     * @return mixed FALSE | QuizFormType
      */
     public function saveQuizForm()
     {
         $form = $this->formFactory->create(new QuizFormType());
         $form->bindRequest($this->request);
 
-        if(!$form->isValid())return FALSE;
+        if(!$form->isValid())return $form;
 
         $quiz = $form->getData();
         $this->em->persist($quiz);
@@ -65,15 +65,18 @@ class QuizFormManager
     /**
      *  Allows the edition of a Quiz based on its ID
      *
-     *  @param int $id
-     *  @return mixed FALSE | QuizFormType
+     * @param int $id
+     * @return mixed FALSE | QuizFormType
+     * @throw \InvalidArgumentException
      */
     public function editQuizForm($id)
     {
         $id = intval($id);
 
         $repo = $this->em->getRepository('EguliasQuizBundle:Quiz');
-        if(!$quiz = $repo->findOneBy(array('id' => $id)))return FALSE;
+        if(!$quiz = $repo->findOneBy(array('id' => $id))) {
+            throw new \InvalidArgumentException("Invalid Quiz ID. Value given $id ");
+        }
 
         $form = $this->getQuizForm();
         $form->setData($quiz);
@@ -139,7 +142,7 @@ class QuizFormManager
         }
         catch (\Exception $e)
         {
-            return $e->getMessage();
+            throw $e;
         }
     }
 }
