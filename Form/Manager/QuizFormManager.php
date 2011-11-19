@@ -96,7 +96,9 @@ class QuizFormManager
         $id = intval($id);
         try {
             //Quiz from DB
-            $quiz = $this->em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id' => $id));
+            if(!$quiz = $this->em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id' => $id))) {
+                throw new \InvalidArgumentException("Invalid Quiz ID. Value given $id ");
+            }
             //Form raw data
             $rawData = $this->request->get('quiz');
 
@@ -140,9 +142,8 @@ class QuizFormManager
             $this->em->flush();
             return $form;
         }
-        catch (\Exception $e)
-        {
-            throw $e;
+        catch (\Exception $e) {
+            throw new \Exception($e->getMessage(),0,$e);
         }
     }
 }

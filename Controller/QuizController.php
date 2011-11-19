@@ -25,16 +25,9 @@ class QuizController extends Controller
      */
     public function takeQuizAction($id)
     {
-        $quiz = $this->get('doctrine')->getEntityManager()->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id'=> $id));
-
-        $questions = $quiz->getQuestions();
-        foreach($questions as $question) {
-            $question->setAnswer(new Answer);
-        }
-
-        $form = $this->get('form.factory')->create(new QuizForm($quiz->getQuestions()), $quiz);
+        $form = $this->get('egulias.take.quiz')->takeQuiz($id);
         return $this->render('EguliasQuizBundle:Quiz:take_quiz.html.twig', array('quizForm' => $form->createView(),
-            'quiz' => $quiz));
+            'quiz' => $form->getData()));
     }
 
     /**
@@ -43,27 +36,10 @@ class QuizController extends Controller
      */
     public function saveResponseAction($id)
     {
-        $request = $this->get('request');
-        $em = $this->get('doctrine')->getEntityManager();
-        $quiz = $em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id'=> $id));
 
-        $uuid = $quiz->getUUID();
-        $form = $this->get('form.factory')->create(new QuizForm($quiz->getQuestions()));
-        $form->bindRequest($request);
-
-        $qQuestions = $form->getData()->getQuestions();
-        foreach ($qQuestions as  $qq) {
-            $formAnswer = $qq->getAnswer();
-            $quizQuestion = $em->getRepository('EguliasQuizBundle:QuizQuestion')->findOneBy(array('id' =>
-                $qq->getId()));
-            $formAnswer->setQuizUuid($uuid);
-            $formAnswer->setQuizQuestion($quizQuestion);
-            $em->persist($formAnswer);
-
-        }
-        $em->flush();
+        $form = $this->get('egulias.take.quiz')->responseQuiz($id);
         return $this->render('EguliasQuizBundle:Quiz:take_quiz.html.twig', array('quizForm' => $form->createView(),
-            'quiz' => $quiz));
+            'quiz' => $form->getData()));
     }
 }
 
