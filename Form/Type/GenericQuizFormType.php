@@ -7,7 +7,8 @@ use Symfony\Component\Form\AbstractType,
     Egulias\QuizBundle\Entity\QuizQuestions,
     Egulias\QuizBundle\Form\Type\AnswerFormType,
     Egulias\QuizBundle\Form\Type\QuestionsAnswersFormType,
-    Egulias\QuizBundle\Model\Quizes\Quiz
+    Egulias\QuizBundle\Model\Quizes\Quiz,
+    Doctrine\Common\Util\Debug
 ;
 
 class GenericQuizFormType extends AbstractType
@@ -16,19 +17,11 @@ class GenericQuizFormType extends AbstractType
     protected $qQuestions = array();
     protected $quiz = null;
 
-    public function __construct($qQuestions)
-    {
-        $this->qQuestions = $qQuestions;
-    }
     public function buildForm(FormBuilder $builder, array $options)
     {
         $this->builder = $builder;
         $builder->add('questions', 'collection', array(
             'type' => new QuestionsAnswersFormType(),
-            'allow_add' => true,
-            'allow_delete' => false,
-            'prototype' => false,
-            'by_reference' => false
             )
         );
     }

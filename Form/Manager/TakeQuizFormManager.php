@@ -43,7 +43,10 @@ class TakeQuizFormManager
                 $question->setAnswer(new Answer);
             }
 
-            return $this->formFactory->create(new QuizForm($quiz->getQuestions()), $quiz);
+            $form = $this->formFactory->create(new QuizForm(),$quiz );
+            //$form->setData($quiz);
+            return $form;
+
         }
         catch(\Exception $e)
         {

@@ -4,6 +4,7 @@ namespace Egulias\QuizBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilder,
+    Egulias\QuizBundle\Form\EventListener\AddAnswerFieldSubscriber,
     Doctrine\Common\Util\Debug
 ;
 
@@ -13,10 +14,10 @@ class QuestionsAnswersFormType extends AbstractType
     {
         $this->builder = $builder;
 
-        $builder
-            ->add('answer', new AnswerFormType()
-        )
-        ->add('id','hidden');
+        $subscriber = new AddAnswerFieldSubscriber($builder->getFormFactory());
+        $builder->addEventSubscriber($subscriber);
+
+        $builder->add('id','hidden');
     }
 
     public function getName()

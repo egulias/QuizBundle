@@ -76,8 +76,6 @@ class Quiz extends BaseQuiz
     public function setQuestions($questions)
     {
         foreach($questions as $question) {
-            //parent::addQuestion($question);
-            //$this->questions->add($question['question']);
             $this->questions->add($question);
         }
         return $this;

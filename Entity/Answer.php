@@ -30,7 +30,7 @@ class Answer extends BaseAnswer
     /**
      * @ORM\ManyToOne(targetEntity="QuizQuestion", inversedBy="answer")
      */
-    protected $quizQuestion;
+    protected $quiz_question;
 
     /**
      *  @ORM\Column(type="text", nullable=true)
@@ -60,13 +60,13 @@ class Answer extends BaseAnswer
 
     public function setQuizQuestion(QuizQuestion $qq)
     {
-        $this->quizQuestion = $qq;
+        $this->quiz_question = $qq;
         return $this;
     }
 
     public function getQuizQuestion()
     {
-        return $this->quizQuestion;
+        return $this->quiz_question;
     }
 
 }
