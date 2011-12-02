@@ -38,6 +38,16 @@ class Answer extends BaseAnswer
     protected $response = '';
 
     /**
+     *  @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $created;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime('now');
+    }
+
+    /**
      * Get id
      *
      * @return integer

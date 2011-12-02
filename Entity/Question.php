@@ -53,6 +53,7 @@ class Question extends BaseQuestion
         parent::__construct();
         $this->quizes = new ArrayCollection;
     }
+
     public function setText($text)
     {
         $this->text = $text;
@@ -96,7 +97,8 @@ class Question extends BaseQuestion
 
     public function setType($type)
     {
-        $this->type;
+        $this->type = $type;
+        return $this;
     }
 
     public function getType()
