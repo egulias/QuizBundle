@@ -23,9 +23,7 @@ class QuizFormType extends AbstractType
         $builder->add('questions', 'collection', array(
             'type' => new QuestionsListFormType(),
             'allow_add' => true,
-            'allow_delete' => false,
             'prototype' => false,
-            'by_reference' => false
             )
         );
     }

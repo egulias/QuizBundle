@@ -19,7 +19,6 @@ class AddAnswerFieldSubscriber implements EventSubscriberInterface
         $this->factory = $factory;
     }
 
-
     public static function getSubscribedEvents()
     {
         return array(FormEvents::POST_SET_DATA => 'postSetData');

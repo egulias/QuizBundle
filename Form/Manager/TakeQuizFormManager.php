@@ -67,7 +67,7 @@ class TakeQuizFormManager
             $quiz = $this->getQuiz($id);
 
             $uuid = $quiz->getUUID();
-            $form = $this->formFactory->create(new QuizForm($quiz->getQuestions()));
+            $form = $this->takeQuiz($id);
             $form->bindRequest($this->request);
 
             $qQuestions = $form->getData()->getQuestions();

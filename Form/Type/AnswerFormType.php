@@ -16,6 +16,7 @@ class AnswerFormType extends AbstractType
     {
         $this->question = $question;
     }
+
     public function buildForm(FormBuilder $builder, array $options)
     {
         $this->builder = $builder;
