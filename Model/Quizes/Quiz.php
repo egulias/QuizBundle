@@ -36,7 +36,7 @@ abstract class Quiz implements QuizInterface
      */
     public function addQuestion(Question $q)
     {
-        $this->questions[] = $q;
+        $this->questions->add($q);
         return $this;
     }
 
