@@ -1,3 +1,4 @@
 {% extends 'EguliasQuizBundle:Quiz:add_quiz.html.twig' %}
 
 {% block form_action %} {{ path('egulias_quiz_update', {'id':id})}} {% endblock %}
+{% block question_url %}{{ path('egulias_quiz_add_question', {'quiz':id})}}{% endblock  %}

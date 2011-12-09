@@ -12,6 +12,10 @@ $(function(){
         $(this).attr('id', 'question_'+n).addClass('question_form').attr('name','quiz[questions]['+n+'][question]');
       });
 
+      $('#questions_table').find('#question_quiz').each(function(i){
+        $(this).attr('id', 'quiz_'+n).addClass('question_form').attr('name','quiz[questions]['+n+'][quiz]');
+      });
+
     });
     return false;
   });
