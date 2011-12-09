@@ -3,7 +3,9 @@
 namespace Egulias\QuizBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilder
+    Symfony\Component\Form\FormBuilder,
+    Egulias\QuizBundle\Form\EventListener\AddQuizFieldSubscriber,
+    Doctrine\ORM\EntityRepository
 ;
 
 class QuestionsListFormType extends AbstractType
@@ -13,18 +15,24 @@ class QuestionsListFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $this->builder = $builder;
-            $builder
-                ->add('question', 'entity', array(
-                    'required' => TRUE,
-                    'class'    => 'EguliasQuizBundle:Question'
-                    )
-                )
-                ->add('delete', 'checkbox', array(
-                    'label'             => 'Delete Question',
-                    'required'          => false,
-                    'property_path'     => false
-                    )
-                );
+
+        $builder
+            ->add('question', 'entity', array(
+                'required' => TRUE,
+                'class'    => 'EguliasQuizBundle:Question'
+            )
+        )
+        ->add('quiz', 'entity', array(
+            'class' => 'EguliasQuizBundle:Quiz',
+            'read_only' => true,
+            )
+        )
+        ->add('delete', 'checkbox', array(
+            'label'             => 'Delete Question',
+            'required'          => false,
+            'property_path'     => false
+            )
+        );
     }
 
     public function getName()
@@ -35,7 +43,7 @@ class QuestionsListFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            //'data_class' => 'Egulias\QuizBundle\Entity\Question',
+            'data_class' => 'Egulias\QuizBundle\Entity\QuizQuestion',
             'csrf_protection'  => FALSE
         );
     }

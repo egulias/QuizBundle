@@ -15,7 +15,7 @@ abstract class Quiz implements QuizInterface
      * To store quiz questions
      * @var $question array
      */
-    protected $questions = array();
+    protected $questions;
 
     protected $name = '';
 

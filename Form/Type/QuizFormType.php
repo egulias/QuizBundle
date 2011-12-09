@@ -24,6 +24,7 @@ class QuizFormType extends AbstractType
             'type' => new QuestionsListFormType(),
             'allow_add' => true,
             'prototype' => false,
+            'required' => true,
             )
         );
     }

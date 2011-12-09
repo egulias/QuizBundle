@@ -33,7 +33,7 @@ class QuizFormManager
      */
     public function getQuizForm()
     {
-        return $this->formFactory->create(new QuizFormType);
+        return $this->formFactory->create(new QuizFormType());
     }
 
     /**
@@ -43,16 +43,25 @@ class QuizFormManager
      */
     public function saveQuizForm()
     {
-        $form = $this->formFactory->create(new QuizFormType());
-        $form->bindRequest($this->request);
+        $form = $this->getQuizForm();
+        $params = $this->request->get('quiz');
 
+        $questions = array();
+        if(isset($params['questions'])) {
+            $questions = $params['questions'];
+            unset($params['questions']);
+        }
+
+        $form->bind($params);
         if(!$form->isValid())return $form;
 
         $quiz = $form->getData();
         $this->em->persist($quiz);
-        $q = $quiz->getQuestions();
-        foreach($q as $key => $question)
+
+        foreach($questions as $question)
         {
+            $question = $this->em->getRepository('EguliasQuizBundle:Question')
+                ->findOneBy(array('id' => $question['question']));
             $qq = new QuizQuestion;
             $qq->setQuiz($quiz);
             $qq->setQuestion($question);
@@ -103,42 +112,30 @@ class QuizFormManager
             $rawData = $this->request->get('quiz');
 
             $form = $this->getQuizForm();
-            $form->bindRequest($this->request);
+            $form->setData($quiz);
+            $form->bind($rawData);
 
             if(!$form->isValid())return $form;
 
             $quizForm = $form->getData();
-            $this->em->persist($quizForm);
-
             //Question submited in the form
             $formQuestions = $quizForm->getQuestions();
             //Questions from the persisted Quiz
             $quizQuestions = $quiz->getQuestions();
-            //Update existing Questions
+
+            //Fix for when the Quiz is being updated and is empty
             foreach ($quizQuestions as $key => $qq) {
-                if($formQuestions[$key] != $qq->getQuestion()) {
-                    $qq->setQuestion($q[$key]);
-                    $em->persist($qq);
-                }
+                $qq->setQuiz($quiz);
             }
-            //Create/delete Questions
-            foreach($formQuestions as $key => $question)
+            $this->em->persist($quizForm);
+            //Delete Questions
+            foreach($formQuestions as $key => &$question)
             {
-                if(!isset($quizQuestions[$key])) {
-                    $qq = new QuizQuestion;
-                    $qq->setQuiz($quiz);
-                    $qq->setQuestion($question);
-                    $this->em->persist($qq);
-                }
-                else if(isset($rawData['questions'][$key]['delete'])) {
-                    $qq = $this->em->getRepository('EguliasQuizBundle:QuizQuestion')
-                        ->findBy(array(
-                            'quiz' => $quiz->getId()
-                        )
-                    );
-                    $this->em->remove($qq[$key]);
+                if(isset($rawData['questions'][$key]['delete'])) {
+                    $this->em->remove($quizQuestions[$key]);
                 }
             }
+
             $this->em->flush();
             return $form;
         }

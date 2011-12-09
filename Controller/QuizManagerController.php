@@ -33,7 +33,6 @@ class QuizManagerController extends Controller
      */
     public function addAction()
     {
-        //$quizForm = $this->get('form.factory')->create(new QuizFormType());
         $quizForm = $this->get('egulias.quiz.manager')->getQuizForm();
         return $this->render('EguliasQuizBundle:Quiz:add_quiz.html.twig', array('form' => $quizForm->createView()));
     }

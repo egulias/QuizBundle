@@ -10,8 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Doctrine\Common\Util\Debug
 ;
 
-use Egulias\QuizBundle\Form\Type\YesNoQuestionFormType;
 use Egulias\QuizBundle\Form\Type\QuestionFormType;
+use Egulias\QuizBundle\Entity\QuizQuestion;
 use Egulias\QuizBundle\Form\Type\QuestionOptionsFormType;
 use Egulias\QuizBundle\Form\Type\QuestionsListFormType;
 
@@ -56,7 +56,13 @@ class QuestionController extends Controller
      */
     public function addQuestionAction()
     {
+        $quizId = intval($this->get('request')->get('quiz'));
         $q = $this->get('form.factory')->create(new QuestionsListFormType());
+        if($quiz = $this->get('doctrine.orm.entity_manager')->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id' => $quizId))) {
+            $qq = new QuizQuestion();
+            $qq->setQuiz($quiz);
+            $q->setData($qq);
+        }
         return $this->render('EguliasQuizBundle:Question:quizQuestionForm.html.twig', array('questionForm' => $q->createView(),
         ));
     }

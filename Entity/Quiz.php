@@ -29,7 +29,7 @@ class Quiz extends BaseQuiz
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="quiz")
+     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="quiz", cascade={"persist"})
      */
     protected $questions;
 
@@ -71,7 +71,7 @@ class Quiz extends BaseQuiz
 
     /**
      *
-     * @see Quiz
+     * @see BaseQuiz
      */
     public function setQuestions($questions)
     {
@@ -79,6 +79,11 @@ class Quiz extends BaseQuiz
             $this->questions->add($question);
         }
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->getId();
     }
 
 }

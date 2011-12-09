@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
 use Egulias\QuizBundle\Form\Type\AnswerFormType;
-use Doctrine\Common\Util\Debug;
 
 
 class AddAnswerFieldSubscriber implements EventSubscriberInterface
@@ -34,12 +33,4 @@ class AddAnswerFieldSubscriber implements EventSubscriberInterface
         }
         $form->add($this->factory->createNamed(new AnswerFormType($data->getQuestion()),'answer'));
     }
-
-
-
-
-
 }
-
-
-

@@ -23,7 +23,7 @@ class QuizQuestion
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Quiz", inversedBy="question")
+     * @ORM\ManyToOne(targetEntity="Quiz", inversedBy="quiz_question")
      */
     protected $quiz;
 
@@ -96,7 +96,7 @@ class QuizQuestion
 
     public function __toString()
     {
-        $label = $this->getQuestion();
-        return 'Quiz Question';
+        $label = $this->getQuestion()->getText();
+        return $label;
     }
  }
