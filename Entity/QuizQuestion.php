@@ -33,7 +33,7 @@ class QuizQuestion
     protected $question;
 
     /**
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="quiz_question")
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="quiz_question", cascade={"remove"})
      */
     protected $answers;
 
