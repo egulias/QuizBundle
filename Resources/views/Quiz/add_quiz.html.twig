@@ -5,13 +5,28 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% block form_action %} {{ path('egulias_quiz_save')}} {% endblock %}" method="POST" {{ form_enctype(form)}} >
+<h1>{% trans %} New Quiz {% endtrans  %}
+<form action="{% block form_action %} {{ path('egulias_quiz_save')}} {% endblock %}" method="POST" {{
+  form_enctype(form)}} class = "form-stacked" >
+<div class="clearfix">
+  {{ form_label(form.name) }}
+  {{ form_errors(form.name) }}
+  {{ form_widget(form.name) }}
+  <span class="help-block"><strong>{% trans %}Note: {% endtrans %}</strong>{% trans %} The name of the Quiz{% endtrans %}</span>
+</div>
+<div class="clearfix">
+  {{ form_label(form.questions) }}
+  <span class="help-block"><a href="{% block question_url %}{{ path('egulias_quiz_add_question')}}{% endblock  %}"
+  class='addQuestion' >Add a Question</a></span>
+  {{ form_errors(form.questions) }}
+  {{ form_widget(form.questions) }}
+  <span class="help-block"><strong>{% trans %}Note: {% endtrans %}</strong>{% trans %} Use the link above to add new
+  questions to the quiz{% endtrans %}</span>
+</div>
 {{ form_widget(form) }}
-{#{ form_widget(form.question) }#}
-<a href="{% block question_url %}{{ path('egulias_quiz_add_question')}}{% endblock  %}" class='addQuestion' >Add a Question</a>
 <table id='questions_table'>
 </table>
-<input type='submit' />
+<button type='submit' class="btn primary">{% trans %}Save Quiz{% endtrans %}</button>
 </form>
 {% endblock %}
 

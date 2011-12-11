@@ -5,19 +5,30 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('egulias_question_save')}}" method="POST" {{ form_enctype(form)}} >
-<p>New Question</p>
-<table>
-  <tr>
-    <td>
-      {{ form_widget(form) }}
-      <span style='display:none' class='add_options'><a href='#'>+</a></span>
-    </td>
-  </tr>
-  <div style='display:none' class='question_options'>
-  {#{ form_widget(optionsForm) }#}
-  </div>
-</table>
-<input type='submit' />
+<h1>{% trans %} New Question {% endtrans  %}
+<form action="{{ path('egulias_question_save')}}" method="POST" {{ form_enctype(form)}} class="form-stacked">
+<div class="clearfix">
+  {{ form_label(form.name) }}
+  {{ form_errors(form.name) }}
+  {{ form_widget(form.name) }}
+  <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}The name of the Question that will be shown
+when creating a new Quiz{% endtrans %}</span>
+</div>
+<div class="clearfix">
+  {{ form_label(form.text) }}
+  {{ form_errors(form.text) }}
+  {{ form_widget(form.text) }}
+  <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}The question itself. This is what
+  will be shown when taking a quiz.{% endtrans %}</span>
+</div>
+<div class="clearfix">
+  {{ form_label(form.type) }}
+  {{ form_errors(form.type) }}
+  {{ form_widget(form.type) }}
+  <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}The type of answer this question
+  will spect.{% endtrans %}</span>
+</div>
+{{ form_widget(form) }}
+<button type='submit' class="btn primary">{% trans %}Save Question{% endtrans %}</button>
 </form>
 {% endblock %}

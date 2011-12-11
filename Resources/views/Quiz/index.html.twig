@@ -1,14 +1,12 @@
 {% extends 'EguliasQuizBundle::layout.html.twig' %}
 
-{% block extra_js %}
-{% endblock %}
-
 {% block content %}
+<h1>{% trans %}Available Quizes{% endtrans %}</h1>
 <table>
   <thead>
-    <th>Quiz Name</th>
-    <th>Questions</th>
-    <th>Actions</th>
+    <th>{% trans %} Quiz Name {% endtrans %}</th>
+    <th>{% trans %} Questions {% endtrans %}</th>
+    <th>{% trans %} Actions {% endtrans %}</th>
   </thead>
   <tbody>
   {% for quiz  in quizes  %}
@@ -20,7 +18,7 @@
       {% endfor %}
       </td>
       <td>
-        <a href="{{ path('egulias_quiz_edit', {'id':quiz.id}) }}">Modify</a>|
+        <a href="{{ path('egulias_quiz_edit', {'id':quiz.id}) }}">Modify</a> |
         <a href="{{ path('egulias_quiz_take', {'id':quiz.id}) }}">Take</a>
       </td>
     </tr>

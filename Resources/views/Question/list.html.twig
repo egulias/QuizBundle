@@ -1,0 +1,26 @@
+{% extends 'EguliasQuizBundle::layout.html.twig' %}
+{% block content %}
+<h1>{% trans %}Available Questions{% endtrans %}</h1>
+<table>
+  <thead>
+    <th>{% trans %} Question Name {% endtrans %}</th>
+    <th>{% trans %} Question {% endtrans %}</th>
+    <th>{% trans %} Question Type {% endtrans %}</th>
+    <th>{% trans %} Actions {% endtrans %}</th>
+  </thead>
+  <tbody>
+  {% for question  in questions  %}
+    <tr>
+      <td>{{ question.name  }}</td>
+      <td>{{ question.text  }}</td>
+      <td>{{ question.type  }}</td>
+      <td>
+        <a href="">Modify</a> |
+        <a href="">Take</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
