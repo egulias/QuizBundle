@@ -1,6 +1,21 @@
 <tr>
   <td>
-    <p>New Question</p>
+    <h5>{% trans %} New Question{% endtrans %}</h5>
+    <div class="clearfix">
+    {{ form_label(questionForm.question) }}
+    {{ form_errors(questionForm.question) }}
+    {{ form_widget(questionForm.question) }}
+    </div>
+    <div class="clearfix">
+    {{ form_label(questionForm.delete) }}
+    {{ form_errors(questionForm.delete) }}
+    {{ form_widget(questionForm.delete) }}
+    </div>
+    <div class="clearfix hidden">
+    {{ form_label(questionForm.quiz) }}
+    {{ form_errors(questionForm.quiz) }}
+    {{ form_widget(questionForm.quiz) }}
+    </div>
     {{ form_widget(questionForm) }}
   </td>
 </tr>

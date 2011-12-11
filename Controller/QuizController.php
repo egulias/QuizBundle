@@ -37,9 +37,11 @@ class QuizController extends Controller
     public function saveResponseAction($id)
     {
 
-        $form = $this->get('egulias.take.quiz')->responseQuiz($id);
-        return $this->render('EguliasQuizBundle:Quiz:take_quiz.html.twig', array('quizForm' => $form->createView(),
-            'quiz' => $form->getData()));
+        if(!$form = $this->get('egulias.take.quiz')->responseQuiz($id)) {
+            return $this->render('EguliasQuizBundle:Quiz:take_quiz.html.twig', array('quizForm' => $form->createView(),
+                'quiz' => $form->getData()));
+        }
+        return $this->redirect($this->generateUrl('egulias_quiz_panel'));
     }
 }
 
