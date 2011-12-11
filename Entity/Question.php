@@ -25,7 +25,7 @@ class Question extends BaseQuestion
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="question", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="question")
      */
     protected $quizes;
     /**

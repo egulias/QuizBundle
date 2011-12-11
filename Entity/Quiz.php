@@ -29,7 +29,7 @@ class Quiz extends BaseQuiz
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="quiz", cascade={"persist, remove"})
+     * @ORM\OneToMany(targetEntity="QuizQuestion", mappedBy="quiz", cascade={"persist"})
      */
     protected $questions;
 
