@@ -1,7 +1,11 @@
 {% extends 'EguliasQuizBundle::layout.html.twig' %}
 
+{% block extra_css %}
+        <link rel="stylesheet" href="{{ asset('bundles/eguliasquiz/css/questions.css') }}" type="text/css" media="all" />
+{% endblock %}
+
 {% block extra_js %}
-        <script src="{{ asset ('bundles/eguliasquiz/js/question.js') }}" type="text/javascript"></script>
+        <script src="{{ asset ('bundles/eguliasquiz/js/questions.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -24,11 +28,33 @@ when creating a new Quiz{% endtrans %}</span>
 <div class="clearfix">
   {{ form_label(form.type) }}
   {{ form_errors(form.type) }}
-  {{ form_widget(form.type) }}
+  {{ form_widget(form.type, {'attr' : { 'class':'question_type' } }) }}
   <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}The type of answer this question
   will spect.{% endtrans %}</span>
 </div>
 {{ form_widget(form) }}
+<div class="add_options hidden" >
+  <div class="clearfix">
+    <input type="radio" name="question[choices][config][]" value="radio" checked="checked" />
+    <label for="choice[radio]">{% trans %} Use radio buttons - single choice selection {% endtrans %}</label>
+  </div>
+  <div class="clearfix">
+    <input type="radio" name="question[choices][config][]" value="checkbox"/>
+    <label for="choice[checkbox]">{% trans %} Use checkboxes - multiple choice selection {% endtrans %}</label>
+  </div>
+  <div class="clearfix">
+    <input type="radio" name="question[choices][config][]" value="select"/>
+    <label for="choice[radio]">{% trans %} Use a list - single choice selection {% endtrans %}</label>
+  </div>
+  <div class="clearfix">
+    <a href="#">Add choice</a>
+    <div class="question_options hidden">
+      <input type="text" name="question[choices][0]" />
+      <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}This will be the label
+      displayed for the option {% endtrans %}</span>
+    </div>
+  </div>
+</div>
 <button type='submit' class="btn primary">{% trans %}Save Question{% endtrans %}</button>
 </form>
 {% endblock %}

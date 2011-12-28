@@ -5,7 +5,8 @@ namespace Egulias\QuizBundle\Entity;
 use
     Egulias\QuizBundle\Model\Questions\Question as BaseQuestion,
     Doctrine\ORM\Mapping as ORM,
-    Doctrine\Common\Collections\ArrayCollection
+    Doctrine\Common\Collections\ArrayCollection,
+    Egulias\QuizBundle\Entity\Choices
 ;
 use Egulias\QuizBundle\Model\Answers\Answer as BaseAnswer;
 
@@ -42,6 +43,11 @@ class Question extends BaseQuestion
      * @ORM\Column(type="string")
      */
     protected $type = 'text';
+
+    /**
+     *  @ORM\OneToOne(targetEntity="Choices", cascade={"persist"})
+     */
+    protected $choices;
 
     /**
      * @ORM\OneToMany(targetEntity="Answer", mappedBy="quiz_question")
@@ -106,4 +112,16 @@ class Question extends BaseQuestion
         return $this->type;
     }
 
+    public function getChoices()
+    {
+        return $this->choices;
+    }
+
+    public function setChoices(array $choices)
+    {
+        $ch = New Choices;
+        $ch->setChoices($choices);
+        $this->choices = $ch;
+        return $this;
+    }
 }

@@ -28,6 +28,7 @@ class QuestionFormType extends AbstractType
                   'trim' => TRUE,
                   'required' => TRUE
                 ))
+                ->add('choices','text')
                 ;
     }
 
