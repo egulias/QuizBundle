@@ -6,9 +6,9 @@ use
     Egulias\QuizBundle\Model\Questions\Question as BaseQuestion,
     Doctrine\ORM\Mapping as ORM,
     Doctrine\Common\Collections\ArrayCollection,
-    Egulias\QuizBundle\Entity\Choices
+    Egulias\QuizBundle\Entity\Choices,
+    Doctrine\Common\Util\Debug
 ;
-use Egulias\QuizBundle\Model\Answers\Answer as BaseAnswer;
 
 /**
  *
@@ -117,11 +117,9 @@ class Question extends BaseQuestion
         return $this->choices;
     }
 
-    public function setChoices(array $choices)
+    public function setChoices(Choices $choices)
     {
-        $ch = New Choices;
-        $ch->setChoices($choices);
-        $this->choices = $ch;
+        $this->choices = $choices;
         return $this;
     }
 }

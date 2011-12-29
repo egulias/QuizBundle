@@ -6,13 +6,14 @@ use
     Doctrine\ORM\Mapping as ORM,
     Doctrine\Common\Collections\ArrayCollection
 ;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface;
 
 /**
  *
  * @ORM\Entity
  * @ORM\Table (name="choices")
  */
-class Choices
+class Choices implements ChoiceListInterface
 {
     /**
      * @ORM\Id
@@ -26,6 +27,10 @@ class Choices
      */
     protected $choices = array();
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    protected $config = array('type' => 'radio');
 
     public function getId()
     {
@@ -39,7 +44,12 @@ class Choices
 
     public function getChoices()
     {
-        return $this->choices;
+        $choices = $this->choices;
+        foreach($choices as $key => $ch) {
+            $choices[$key] = $ch['label'];
+        }
+        return $choices;
+
     }
 
     public function setChoices(array $choices)
@@ -47,4 +57,22 @@ class Choices
         $this->choices = $choices;
         return $this;
     }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    public function setConfig($config)
+    {
+        $this->config = array('type' => $config);
+        return $this;
+    }
+
+    public function getType()
+    {
+        $config = $this->getConfig();
+        return $config['type'];
+    }
+
 }
