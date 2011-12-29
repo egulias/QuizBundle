@@ -9,27 +9,25 @@ use Symfony\Component\Form\AbstractType,
 
 class QuestionFormType extends AbstractType
 {
-    protected $builder = null;
 
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $this->builder = $builder;
-            $builder
-                ->add('name', 'text', array(
-                    'required' => TRUE,
-                    'trim'     => TRUE
-                ))
-                ->add('text', 'text', array(
-                    'required' => TRUE,
-                    'trim'     => TRUE
-                ))
-                ->add('type', 'choice', array(
-                  'choices' => Question::getBaseTypes(),
-                  'trim' => TRUE,
-                  'required' => TRUE
-                ))
-                ->add('choices','text')
-                ;
+        $builder
+            ->add('name', 'text', array(
+                'required' => TRUE,
+                'trim'     => TRUE
+            ))
+            ->add('text', 'text', array(
+                'required' => TRUE,
+                'trim'     => TRUE
+            ))
+            ->add('type', 'choice', array(
+                'choices' => Question::getBaseTypes(),
+                'trim' => TRUE,
+                'required' => TRUE
+            ))
+            ->add('choices', new ChoicesFormType())
+            ;
     }
 
     public function getName()

@@ -20,12 +20,31 @@ class AnswerFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $this->builder = $builder;
-        $builder
-            ->add('response', $this->question->getType(), array(
-                'required' => TRUE,
-                'trim'     => TRUE,
-                'label'    => $this->question->getText(),
-            )
+        $config =
+            array(
+            'required' => TRUE,
+            'label'    => $this->question->getText(),
+            'property_path' => false,
+            );
+        if($this->question->getType() == 'choice') {
+            $choices = $this->question->getChoices();
+            switch($choices->getType()) {
+            case 'select':
+                $config['expanded'] = FALSE;
+                $config['multiple'] = FALSE;
+                break;
+            case 'checkbox':
+                $config['expanded'] = TRUE;
+                $config['multiple'] = TRUE;
+                break;
+            case 'radio':
+            default:
+                $config['expanded'] = TRUE;
+                break;
+            }
+            $config['choices'] = $choices->getChoices();
+        }
+        $builder->add('response', $this->question->getType(), $config
         );
     }
 
