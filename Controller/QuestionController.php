@@ -23,7 +23,8 @@ class QuestionController extends Controller
      */
     public function questionsPanelAction()
     {
-
+        $questions = $this->get('doctrine.orm.entity_manager')->getRepository('EguliasQuizBundle:Question')->findAll();
+        return $this->render('EguliasQuizBundle:Question:list.html.twig', array('questions' => $questions));
     }
 
     /**
@@ -43,13 +44,37 @@ class QuestionController extends Controller
     public function saveQuestionAction()
     {
         $questionForm = $this->get('form.factory')->create(new QuestionFormType());
-        $questionForm->bindRequest($this->get('request'));
+
+        $data = $this->get('request')->get('question');
+        foreach($data['choices'] as $k => $choice) {
+            if(!is_int($k))continue;
+            $temp[$choice['label']] = $choice;
+            unset($data['choices'][$k]);
+        }
+        $data['choices']['choices'] = $temp;
+        $questionForm->bind($data);
         $em = $this->get('doctrine')->getEntityManager();
         $em->persist($questionForm->getData());
         $em->flush();
-        return $this->redirect($this->generateUrl('egulias_quiz_question_add'));
+        return $this->redirect($this->generateUrl('egulias_quiz_question'));
 
     }
+
+    /**
+     * Edit a Question
+     * @Route ("/quiz/question/{id}/edit", requirements={"id" = "\d+"} ,name="egulias_quiz_question_edit")
+     */
+    public function editQuestionAction($id)
+    {
+        $question =
+            $this->get('doctrine.orm.entity_manager')
+            ->getRepository('EguliasQuizBundle:Question')
+            ->findOneBy(array('id' => $id));
+        $form = $this->get('form.factory')->create(new QuestionFormType(), $question);
+        return $this->render('EguliasQuizBundle:Quiz:questionForm.html.twig', array('form' => $form->createView(), 'id' =>
+        $id));
+    }
+
     /**
      * Add Questions to a Quiz
      * @Route ("/quiz/add/question", name="egulias_quiz_add_question")

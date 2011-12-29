@@ -32,9 +32,13 @@ when creating a new Quiz{% endtrans %}</span>
   <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}The type of answer this question
   will spect.{% endtrans %}</span>
 </div>
-{{ form_widget(form) }}
 <div class="add_options hidden" >
-  <div class="clearfix">
+<div class="clearfix">
+  {{ form_label(form.choices) }}
+  {{ form_errors(form.choices) }}
+  {{ form_widget(form.choices) }}
+</div>
+{#  <div class="clearfix">
     <input type="radio" name="question[choices][config][]" value="radio" checked="checked" />
     <label for="choice[radio]">{% trans %} Use radio buttons - single choice selection {% endtrans %}</label>
   </div>
@@ -46,15 +50,18 @@ when creating a new Quiz{% endtrans %}</span>
     <input type="radio" name="question[choices][config][]" value="select"/>
     <label for="choice[radio]">{% trans %} Use a list - single choice selection {% endtrans %}</label>
   </div>
+#}
   <div class="clearfix">
     <a href="#">Add choice</a>
     <div class="question_options hidden">
-      <input type="text" name="question[choices][0]" />
-      <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}This will be the label
-      displayed for the option {% endtrans %}</span>
+      <input type="text" name="options[label]" class="choice_label"/>
+      <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}This will be the label displayed for the option {% endtrans %}</span>
+      <input type="text" name="options[value]" class="choice_value"/>
+      <span class="help-block"><strong>{% trans %}Note:{% endtrans %}</strong>{% trans %}This will be the value for the option {% endtrans %}</span>
     </div>
   </div>
 </div>
+{{ form_widget(form) }}
 <button type='submit' class="btn primary">{% trans %}Save Question{% endtrans %}</button>
 </form>
 {% endblock %}

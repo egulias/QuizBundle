@@ -17,7 +17,8 @@ $(function(){
     option = $('.question_options:not(:visible)');
     cloned = option.clone();
     n = $('.question_options').length;
-    $('input',cloned).attr('name', 'question[choices][' + n  + ']');
+    $('input.choice_label',cloned).attr('name', 'question[choices][' + n  + '][label]');
+    $('input.choice_value',cloned).attr('name', 'question[choices][' + n  + '][value]');
     cloned.show();
     $(this).parent('div').append(cloned);
   });
