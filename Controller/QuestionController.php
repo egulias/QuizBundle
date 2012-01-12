@@ -46,8 +46,8 @@ class QuestionController extends Controller
         $questionForm = $this->get('form.factory')->create(new QuestionFormType());
 
         $data = $this->get('request')->get('question');
-        foreach($data['choices'] as $k => $choice) {
-            if(!is_int($k))continue;
+        foreach ($data['choices'] as $k => $choice) {
+            if (!is_int($k))continue;
             $temp[$choice['label']] = $choice;
             unset($data['choices'][$k]);
         }
@@ -71,7 +71,8 @@ class QuestionController extends Controller
             ->getRepository('EguliasQuizBundle:Question')
             ->findOneBy(array('id' => $id));
         $form = $this->get('form.factory')->create(new QuestionFormType(), $question);
-        return $this->render('EguliasQuizBundle:Quiz:questionForm.html.twig', array('form' => $form->createView(), 'id' =>
+        return $this->render('EguliasQuizBundle:Quiz:questionForm.html.twig',
+            array('form' => $form->createView(), 'id' =>
         $id));
     }
 
@@ -83,12 +84,15 @@ class QuestionController extends Controller
     {
         $quizId = intval($this->get('request')->get('quiz'));
         $q = $this->get('form.factory')->create(new QuestionsListFormType());
-        if($quiz = $this->get('doctrine.orm.entity_manager')->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id' => $quizId))) {
+        if ($quiz = $this->get('doctrine.orm.entity_manager')->getRepository('EguliasQuizBundle:Quiz')
+            ->findOneBy(array('id' => $quizId))
+        ) {
             $qq = new QuizQuestion();
             $qq->setQuiz($quiz);
             $q->setData($qq);
         }
-        return $this->render('EguliasQuizBundle:Question:quizQuestionForm.html.twig', array('questionForm' => $q->createView(),
+        return $this->render('EguliasQuizBundle:Question:quizQuestionForm.html.twig',
+            array('questionForm' => $q->createView(),
         ));
     }
 

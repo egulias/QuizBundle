@@ -35,7 +35,7 @@ class Answer extends BaseAnswer
     /**
      *  @ORM\Column(type="text", nullable=true)
      */
-    protected $response = '';
+    protected $response;
 
     /**
      *  @ORM\Column(type="datetime", nullable=false)
@@ -78,5 +78,5 @@ class Answer extends BaseAnswer
     {
         return $this->quiz_question;
     }
-
 }
+
