@@ -1,9 +1,10 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
+
 namespace Egulias\QuizBundle\Entity;
 
 use
     Egulias\QuizBundle\Model\Answers\Answer as BaseAnswer,
+    Egulias\QuizBundle\Model\Answers\AnswerResponseFactory,
     Egulias\QuizBundle\Entity\QuizQuestion,
     Doctrine\ORM\Mapping as ORM
 ;
@@ -12,6 +13,7 @@ use
  *
  * @ORM\Entity
  * @ORM\Table (name="answer")
+ * @ORM\HasLifecycleCallbacks
  */
 class Answer extends BaseAnswer
 {
@@ -33,7 +35,7 @@ class Answer extends BaseAnswer
     protected $quiz_question;
 
     /**
-     *  @ORM\Column(type="text", nullable=true)
+     *  @ORM\Column(type="object", nullable=true)
      */
     protected $response;
 
@@ -77,6 +79,16 @@ class Answer extends BaseAnswer
     public function getQuizQuestion()
     {
         return $this->quiz_question;
+    }
+
+
+    /**
+     *  @ORM\PrePersist
+     */
+    public function setResponseObject()
+    {
+        $factory = new AnswerResponseFactory($this, $this->getQuizQuestion()->getQuestion());
+        $this->response = $factory->getResponse();
     }
 }
 

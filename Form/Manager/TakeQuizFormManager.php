@@ -10,6 +10,8 @@ use Doctrine\Common\Util\Debug;
 /**
  *
  * @author Eduardo Gulias Davis <me@egulias.com>
+ * @package EguliasQuizBundle
+ * @subpackage Form
  */
 class TakeQuizFormManager
 {
@@ -39,16 +41,15 @@ class TakeQuizFormManager
         {
             $quiz = $this->getQuiz($id);
             $questions = $quiz->getQuestions();
-            foreach($questions as $question) {
-                $question->setAnswer(new Answer);
+            foreach ($questions as $question) {
+                $question->setAnswer(new Answer());
             }
 
             $form = $this->formFactory->create(new QuizForm(),$quiz );
-            //$form->setData($quiz);
             return $form;
 
         }
-        catch(\Exception $e)
+        catch (\Exception $e)
         {
             throw new \Exception($e->getMessage(),0, $e);
         }
@@ -65,11 +66,9 @@ class TakeQuizFormManager
     {
         try {
             $quiz = $this->getQuiz($id);
-
             $uuid = $quiz->getUUID();
             $form = $this->takeQuiz($id);
             $form->bindRequest($this->request);
-
             $qQuestions = $form->getData()->getQuestions();
             foreach ($qQuestions as  $qq) {
                 $formAnswer = $qq->getAnswer();
@@ -90,7 +89,7 @@ class TakeQuizFormManager
 
     private function getQuiz($id)
     {
-        if(!$quiz = $this->em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id'=> $id))) {
+        if (!$quiz = $this->em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id'=> $id))) {
             throw new \InvalidArgumentException("Invalid Quiz ID. Value given $id ");
         }
         return $quiz;

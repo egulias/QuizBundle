@@ -24,11 +24,11 @@ class AnswerFormType extends AbstractType
             array(
             'required' => TRUE,
             'label'    => $this->question->getText(),
-            'property_path' => false,
             );
-        if($this->question->getType() == 'choice') {
+        if ($this->question->getType() == 'choice') {
             $choices = $this->question->getChoices();
-            switch($choices->getType()) {
+            $chConf = $choices->getConfig();
+            switch ($choices->getType()) {
             case 'select':
                 $config['expanded'] = FALSE;
                 $config['multiple'] = FALSE;
