@@ -42,8 +42,8 @@ abstract class Question
         $t = array(
             self::TEXT      => self::TEXT,
             self::TEXTAREA  => self::TEXTAREA,
-            self::NUMBER    => self::NUMBER,
-            self::BOOLEAN   => self::BOOLEAN,
+ //           self::NUMBER    => self::NUMBER,
+ //           self::BOOLEAN   => self::BOOLEAN,
             self::CHOICE    => self::CHOICE,
         );
         return $t;
