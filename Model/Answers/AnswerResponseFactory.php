@@ -25,7 +25,11 @@ class AnswerResponseFactory
     public function getResponse()
     {
         if (is_null($this->response)) {
-            $type = ucfirst(strtolower($this->question->getChoices()->getType()));
+            $type = $this->question->getType();
+            if ($type == 'choice') {
+                $type = $this->question->getChoices()->getType();
+            }
+            $type = ucfirst(strtolower($type));
             $class = "Egulias\\QuizBundle\\Model\\Answers\\AnswerResponse" . $type;
             $this->response = new $class($this->answer->getResponse());
         }

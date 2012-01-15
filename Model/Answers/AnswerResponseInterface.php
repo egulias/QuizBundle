@@ -7,6 +7,5 @@ interface AnswerResponseInterface
     function setValue($respose);
     function getValue();
     function getRawValue();
-    function getHumanReadable();
 
 }

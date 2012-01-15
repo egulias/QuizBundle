@@ -14,10 +14,25 @@ abstract class AnswerResponse implements AnswerResponseInterface
     protected $response;
     protected $value;
 
+    public function __construct($response)
+    {
+        $this->response = $response;
+        $this->setValue($response);
+    }
 
     public function getRawValue()
     {
         return $this->response;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
     }
 
 }

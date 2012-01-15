@@ -45,10 +45,10 @@ class Choices implements ChoiceListInterface
     public function getChoices()
     {
         $choices = $this->choices;
-        foreach($choices as $key => $ch) {
-            $choices[$key] = $ch['label'];
+        foreach ($choices as $key => $choice) {
+            $ch[$choice['value']] = $choice['label'];
         }
-        return $choices;
+        return $ch;
 
     }
 

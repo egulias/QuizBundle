@@ -88,7 +88,7 @@ class Answer extends BaseAnswer
     public function setResponseObject()
     {
         $factory = new AnswerResponseFactory($this, $this->getQuizQuestion()->getQuestion());
-        $this->response = $factory->getResponse();
+        $this->setResponse($factory->getResponse());
     }
 }
 
