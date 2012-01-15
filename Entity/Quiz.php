@@ -34,12 +34,6 @@ class Quiz extends BaseQuiz
     protected $questions;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $type = 'Quiz';
-
-
-    /**
      * Get id
      *
      * @return integer
@@ -70,12 +64,22 @@ class Quiz extends BaseQuiz
     }
 
     /**
+     *  Get Quiz questions
+     *
+     *  @return Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
+    /**
      *
      * @see BaseQuiz
      */
-    public function setQuestions($questions)
+    public function setQuestions(array $questions)
     {
-        foreach($questions as $question) {
+        foreach ($questions as $question) {
             $this->questions->add($question);
         }
         return $this;
