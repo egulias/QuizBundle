@@ -19,6 +19,13 @@ abstract class Quiz implements QuizInterface
         $this->setUUID();
     }
 
+    public function setQuestions(array $questions)
+    {
+        foreach ($questions as $question) {
+            $this->questions->add($question);
+        }
+        return $this;
+    }
 
     public function getQuestion($n = NULL)
     {

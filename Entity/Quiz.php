@@ -33,6 +33,7 @@ class Quiz extends BaseQuiz
      */
     protected $questions;
 
+
     /**
      * Get id
      *
@@ -73,17 +74,6 @@ class Quiz extends BaseQuiz
         return $this->questions;
     }
 
-    /**
-     *
-     * @see BaseQuiz
-     */
-    public function setQuestions(array $questions)
-    {
-        foreach ($questions as $question) {
-            $this->questions->add($question);
-        }
-        return $this;
-    }
 
     public function __toString()
     {

@@ -3,9 +3,7 @@
 
 namespace Egulias\QuizBundle\Tests\Model\Answers;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase,
-    Egulias\QuizBundle\Model\Answers\Answer
-;
+use Egulias\QuizBundle\Model\Answers\Answer;
 
 class AnswerTest extends WebTestCase
 {
@@ -21,5 +19,11 @@ class AnswerTest extends WebTestCase
         $a = new Answer();
         $a->setResponse('My Response');
         $this->assertEquals('My Response', $a->getResponse());
+    }
+
+    public function testSetChoicesResponse()
+    {
+        $a = new Answer();
+        $a->setResponse(array('choice1'=>'choice one'));
     }
 }
