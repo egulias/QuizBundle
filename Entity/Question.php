@@ -56,7 +56,6 @@ class Question extends BaseQuestion
 
     public function __construct()
     {
-        parent::__construct();
         $this->quizes = new ArrayCollection;
     }
 
