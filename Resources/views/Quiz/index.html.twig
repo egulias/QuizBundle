@@ -19,7 +19,8 @@
       </td>
       <td>
         <a href="{{ path('egulias_quiz_edit', {'id':quiz.id}) }}">Modify</a> |
-        <a href="{{ path('egulias_quiz_take', {'id':quiz.id}) }}">Take</a>
+        <a href="{{ path('egulias_quiz_take', {'id':quiz.id}) }}">Take</a>   |
+        <a href="{{ path('egulias_selected_quiz_answers', {'id':quiz.id}) }}">See them</a>
       </td>
     </tr>
   {% endfor %}

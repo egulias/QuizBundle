@@ -1,0 +1,27 @@
+{% extends 'EguliasQuizBundle::layout.html.twig' %}
+
+{% block content %}
+<h1>{% trans %}Answered Answers{% endtrans %}</h1>
+<table>
+  <thead>
+    <th>{% trans %} Quiz Instance UUID {% endtrans %}</th>
+    <th>{% trans %} Quiz Name {% endtrans %}</th>
+    <th>{% trans %} Question {% endtrans %}</th>
+    <th>{% trans %} Resonse {% endtrans %}</th>
+    <th>{% trans %} Resonse Date {% endtrans %}</th>
+  </thead>
+  <tbody>
+  {% for answer in answers  %}
+    <tr>
+      <td>{{ answer.getquizquestion.getquiz.uuid }}</td>
+      <td>{{ answer.getquizquestion.getquiz.name }}</td>
+      <td>{{ answer.getquizquestion.getquestion.text }}</td>
+      <td>{{ answer.getresponse.getvalue }}</td>
+      <td>{{ answer.created.format('d/m/Y - h:i:s') }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+

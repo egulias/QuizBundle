@@ -81,6 +81,10 @@ class Answer extends BaseAnswer
         return $this->quiz_question;
     }
 
+    public function getCreated()
+    {
+        return $this->created;
+    }
 
     /**
      *  @ORM\PrePersist

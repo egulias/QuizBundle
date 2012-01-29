@@ -17,6 +17,6 @@ class AnswerResponseCheckbox extends AnswerResponse
 
     public function getValue()
     {
-        return $this->value;
+        return implode(",",$this->value);
     }
 }
