@@ -3,7 +3,7 @@ namespace Egulias\QuizBundle\Tests\Model\Questions;
 
 use Egulias\QuizBundle\Model\Questions\Question;
 
-class QuestionTest extends  \PHPUnit_Framework_TestCase
+class QuestionTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateQuestion()
     {
