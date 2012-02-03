@@ -31,7 +31,7 @@ class AnswerController extends Controller
     public function quizAnswerListAction($id)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $answers = $em->getRepository('EguliasQuizBundle:Answer')->findAll();
+        $answers = $em->getRepository('EguliasQuizBundle:Answer')->findByQuiz($id);
 
         return $this->render('EguliasQuizBundle:Answer:index.html.twig', array('answers' => $answers));
     }

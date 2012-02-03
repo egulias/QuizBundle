@@ -11,7 +11,7 @@ use
 
 /**
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Egulias\QuizBundle\Repository\AnswerRepository")
  * @ORM\Table (name="answer")
  * @ORM\HasLifecycleCallbacks
  */
