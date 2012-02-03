@@ -3,17 +3,17 @@
 namespace Egulias\QuizBundle\Entity;
 
 use
-    Doctrine\ORM\Mapping as ORM,
-    Doctrine\Common\Collections\ArrayCollection
+    Doctrine\ORM\Mapping as ORM
+    //Doctrine\Common\Collections\ArrayCollection
 ;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface;
+use Egulias\QuizBundle\Model\Questions\QuestionChoices;
 
 /**
  *
  * @ORM\Entity
  * @ORM\Table (name="choices")
  */
-class Choices implements ChoiceListInterface
+class Choices extends QuestionChoices
 {
     /**
      * @ORM\Id
@@ -21,58 +21,5 @@ class Choices implements ChoiceListInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    protected $choices = array();
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    protected $config = array('type' => 'radio');
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getChoices()
-    {
-        $choices = $this->choices;
-        foreach ($choices as $key => $choice) {
-            $ch[$choice['value']] = $choice['label'];
-        }
-        return $ch;
-
-    }
-
-    public function setChoices(array $choices)
-    {
-        $this->choices = $choices;
-        return $this;
-    }
-
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    public function setConfig($config)
-    {
-        $this->config = array('type' => $config);
-        return $this;
-    }
-
-    public function getType()
-    {
-        $config = $this->getConfig();
-        return $config['type'];
-    }
 
 }

@@ -37,7 +37,7 @@ abstract class Quiz implements QuizInterface
         else return $this->questions[$n];
     }
 
-    protected function setUUID()
+    public function setUUID()
     {
         if (!$this->uuid) {
             $this->uuid = SHA1(uniqid('Q',TRUE));

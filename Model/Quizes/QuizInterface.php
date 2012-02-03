@@ -12,6 +12,7 @@ interface QuizInterface
     public function getQuestions();
     public function setName($name);
     public function getName();
+    public function setUUID();
     public function getUUID();
 
 }
