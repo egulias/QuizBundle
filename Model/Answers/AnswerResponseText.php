@@ -9,5 +9,14 @@ namespace Egulias\QuizBundle\Model\Answers;
  **/
 class AnswerResponseText extends AnswerResponse
 {
+    public function setText($text)
+    {
+        $this->text = $text;
+        return $this;
+    }
 
+    public function getText()
+    {
+        return $this->text;
+    }
 }

@@ -21,6 +21,7 @@ abstract class AnswerResponse implements AnswerResponseInterface
     {
         $this->response = $response;
         $this->setValue($question->getText());
+        $this->setText($response);
     }
 
     public function getRawValue()
