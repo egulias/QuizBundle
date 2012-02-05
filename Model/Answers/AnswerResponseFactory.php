@@ -31,7 +31,8 @@ class AnswerResponseFactory
             }
             $type = ucfirst(strtolower($type));
             $class = "Egulias\\QuizBundle\\Model\\Answers\\AnswerResponse" . $type;
-            $this->response = new $class($this->answer->getResponse());
+            $this->response = new $class($this->answer->getResponse(), $this->question);
+
         }
         return $this->response;
     }
