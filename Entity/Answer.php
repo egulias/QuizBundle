@@ -4,8 +4,6 @@ namespace Egulias\QuizBundle\Entity;
 
 use
     Egulias\QuizBundle\Model\Answers\Answer as BaseAnswer,
-    Egulias\QuizBundle\Model\Answers\AnswerResponseFactory,
-    Egulias\QuizBundle\Entity\QuizQuestion,
     Doctrine\ORM\Mapping as ORM
 ;
 

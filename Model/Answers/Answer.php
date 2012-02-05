@@ -9,8 +9,6 @@ use Egulias\QuizBundle\Model\Quizes\QuizQuestion;
 /**
  *
  * @author Eduardo Gulias Davis <me@egulias.com>
- *
- * @ORM\HasLifecycleCallbacks
  */
 abstract class Answer
 {
@@ -75,14 +73,6 @@ abstract class Answer
         return $this->created;
     }
 
-    /**
-     *  @ORM\PrePersist
-     */
-    public function setResponseObject()
-    {
-        $factory = new AnswerResponseFactory($this, $this->getQuizQuestion()->getQuestion());
-        $this->setResponse($factory->getResponse());
-    }
 
     public function setResponse($response)
     {
