@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+      xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+
+    <parameters>
+        <parameter key="egulias_answer_events.class">Egulias\QuizBundle\Listener\Doctrine\AnswerEvents</parameter>
+    </parameters>
+
+    <services>
+        <service id="egulias.answer.listener" class="%egulias_answer_events.class%">
+          <tag name="doctrine.event_listener" event="prePersist" />
+        </service>
+    </services>
+</container>
