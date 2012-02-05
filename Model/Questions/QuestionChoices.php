@@ -3,6 +3,7 @@
 namespace Egulias\QuizBundle\Model\Questions;
 
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 abstract class QuestionChoices implements ChoiceListInterface
 {

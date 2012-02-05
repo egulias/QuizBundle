@@ -3,9 +3,7 @@
 namespace Egulias\QuizBundle\Entity;
 
 use
-    Doctrine\ORM\Mapping as ORM
-    //Doctrine\Common\Collections\ArrayCollection
-;
+    Doctrine\ORM\Mapping as ORM;
 use Egulias\QuizBundle\Model\Questions\QuestionChoices;
 
 /**

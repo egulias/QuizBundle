@@ -116,6 +116,17 @@ abstract class Question implements QuestionInterface
         $this->choices = $choices;
         return $this;
     }
+
+    public function setQuizes(ArrayCollection $quizes)
+    {
+        $this->quizes = $quizes;
+        return $this;
+    }
+
+    public function getQuizes()
+    {
+        return $this->quizes;
+    }
     public static function getBaseTypes()
     {
         $t = array(

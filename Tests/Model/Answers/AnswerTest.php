@@ -4,6 +4,7 @@
 namespace Egulias\QuizBundle\Tests\Model\Answers;
 
 use Egulias\QuizBundle\Model\Answers\Answer;
+use Egulias\QuizBundle\Model\Quizes\QuizQuestion;
 use Egulias\QuizBundle\Model\Questions\Question;
 use Egulias\QuizBundle\Model\Questions\QuestionChoices;
 use Egulias\QuizBundle\Model\Answers\AnswerResponseFactory;
@@ -51,5 +52,12 @@ class AnswerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Yes,TwoAnswers', $response->getValue());
         $this->assertArrayHasKey(1, $response->getRawValue());
         $this->assertArrayHasKey('more', $response->getRawValue());
+    }
+
+    public function testIntermediateTableSetting()
+    {
+        $qq = $this->getMockForAbstractClass('Egulias\QuizBundle\Model\Quizes\QuizQuestion');
+        $this->answerMock->setQuizQuestion($qq);
+        $this->assertEquals($qq,$this->answerMock->getQuizQuestion());
     }
 }

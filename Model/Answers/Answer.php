@@ -4,6 +4,7 @@ namespace Egulias\QuizBundle\Model\Answers;
 
 use Doctrine\ORM\Mapping as ORM;
 use Egulias\QuizBundle\Model\Answers\AnswerResponseInterface;
+use Egulias\QuizBundle\Model\Quizes\QuizQuestion;
 
 /**
  *
