@@ -8,8 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface;
 
 /**
- * Declaration of class Question to allow the creation of multiple types of questions
+ * Question
  *
+ * @uses QuestionInterface
+ * @abstract
+ * @package QuizBundle
+ * @subpackage Model
  * @author Eduardo Gulias Davis <me@egulias.com>
  */
 abstract class Question implements QuestionInterface
@@ -94,7 +98,6 @@ abstract class Question implements QuestionInterface
         return $this->name;
     }
 
-
     public function setType($type)
     {
         $this->type = $type;
@@ -127,6 +130,7 @@ abstract class Question implements QuestionInterface
     {
         return $this->quizes;
     }
+
     public static function getBaseTypes()
     {
         $t = array(

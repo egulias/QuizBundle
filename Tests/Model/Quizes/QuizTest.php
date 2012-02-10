@@ -3,6 +3,7 @@ namespace Egulias\QuizBundle\Tests\Model\Quizes;
 
 use Egulias\QuizBundle\Model\Questions\Question;
 use Egulias\QuizBundle\Model\Quizes\Quiz;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class QuizTest extends  \PHPUnit_Framework_TestCase
 {
@@ -11,7 +12,9 @@ class QuizTest extends  \PHPUnit_Framework_TestCase
         $q1 = $this->getMockForAbstractClass('Egulias\QuizBundle\Model\Questions\Question');
         $q2 = $this->getMockForAbstractClass('Egulias\QuizBundle\Model\Questions\Question');
 
-        $questions = array($q1,$q2);
+        $questions = new ArrayCollection;
+        $questions->add($q1);
+        $questions->add($q2);
         $quiz = $this->getMockForAbstractClass('Egulias\QuizBundle\Model\Quizes\Quiz');
         $uuid = $quiz->getUUID();
 

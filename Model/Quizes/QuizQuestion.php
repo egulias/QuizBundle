@@ -8,6 +8,13 @@ use Egulias\QuizBundle\Model\Quizes\Quiz;
 use Egulias\QuizBundle\Model\Questions\QuestionInterface;
 use Egulias\QuizBundle\Model\Answers\Answer;
 
+/**
+ * QuizQuestion (Intermediate table)
+ *
+ * @abstract
+ * @package QuizBundle
+ * @author Eduardo Gulias Davis <me@egulias.com>
+ */
 abstract class QuizQuestion
 {
 
@@ -73,6 +80,7 @@ abstract class QuizQuestion
     {
         return $this->answers;
     }
+
     public function getAnswer()
     {
         return $this->answers->current();
