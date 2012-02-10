@@ -58,7 +58,7 @@ abstract class Quiz implements QuizInterface
     }
 
     /**
-     * @inherit doc
+     * @see QuizInterface
      */
     public function setUUID()
     {
