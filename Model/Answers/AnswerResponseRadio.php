@@ -17,7 +17,7 @@ class AnswerResponseRadio extends AnswerResponse
         $this->response = $response;
         $choices = $question->getChoices()->getChoices();
         $this->setValue($response);
-        $this->setText($choices[$response]);
+        $this->setText($response);
     }
 
     public function setValue($value)
@@ -30,9 +30,20 @@ class AnswerResponseRadio extends AnswerResponse
         return $this->value;
     }
 
-    public function setText($text)
+    /**
+     * setText
+     *
+     * @param array $choice
+     * @access public
+     * @return Egulias\QuizBundle\Model\Answers\AnswerResponseRadio
+     * @throw \InvalidArgumentException
+     */
+    public function setText($choice)
     {
-        $this->text = $text;
+        if (!is_array($choice)) {
+           throw new \InvalidArgumentException('Must be an array');
+        }
+        $this->text = array_pop($choice);
         return $this;
     }
 

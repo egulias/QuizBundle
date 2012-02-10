@@ -17,23 +17,49 @@ abstract class AnswerResponse implements AnswerResponseInterface
     protected $value;
     protected $text;
 
+    /**
+     * Constructor
+     *
+     * @param mixed $response
+     * @param QuestionInterface $question
+     * @access public
+     */
     public function __construct($response, QuestionInterface $question)
     {
         $this->response = $response;
-        $this->setValue($question->getText());
-        $this->setText($response);
+        $this->setText($question->getText());
+        $this->setValue($response);
     }
 
+    /**
+     * Get raw response value
+     *
+     * @access public
+     * @return mixed
+     */
     public function getRawValue()
     {
         return $this->response;
     }
 
+    /**
+     * Get response value
+     *
+     * @access public
+     * @return mixed
+     */
     public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * setValue
+     *
+     * @param mixed $value
+     * @access public
+     * @return void
+     */
     public function setValue($value)
     {
         $this->value = $value;

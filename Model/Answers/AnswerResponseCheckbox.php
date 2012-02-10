@@ -17,35 +17,55 @@ class AnswerResponseCheckbox extends AnswerResponse
     {
         $this->response = $response;
         $choices = $question->getChoices();
-        $this->setValue($choices);
-        $this->setText($choices);
+        $this->setValue($response);
+        $this->setText($response);
     }
+
+    /**
+     * setValue
+     *
+     * @param Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface $choices
+     * @access public
+     * @return Egulias\QuizBundle\Model\Answers\AnswerResponseCheckbox
+     * @throw \InvalidArgumentException
+     */
     public function setValue($choices)
     {
-        if (!$choices instanceOf ChoiceListInterface ) {
-           throw new InvalidArgumentException('Must be an instance of ChoiceListInterface ');
+        if (!is_array($choices)) {
+            throw new \InvalidArgumentException('Must be an array');
         }
-        $choices = $choices->getChoices();
         foreach ($choices as $value => $text) {
             $this->value[] = $value;
         }
         return $this;
     }
 
+    /**
+     * getValue
+     *
+     * @access public
+     * @return string
+     */
     public function getValue()
     {
-        return implode(",",$this->value);
+        return $this->value;
     }
 
+    /**
+     * Set response text
+     *
+     * @param Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface $choices
+     * @access public
+     * @return Egulias\QuizBundle\Model\Answers\AnswerResponseCheckbox
+     * @throw \InvalidArgumentException
+     */
     public function setText($choices)
     {
-        if (!$choices instanceOf ChoiceListInterface ) {
-           throw new InvalidArgumentException('Must be an instance of ChoiceListInterface ');
+        if (!is_array($choices)) {
+           throw new \InvalidArgumentException('Must be an array');
         }
-        $choices = $choices->getChoices();
-        foreach ($choices as $value => $text) {
-            $this->text .= $text . ' ';
-        }
+        $this->text = implode(',', $choices);
+
         return $this;
     }
 

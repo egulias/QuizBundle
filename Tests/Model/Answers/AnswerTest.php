@@ -37,21 +37,40 @@ class AnswerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('My Response with a lot more \r\n TEXT', $response->getValue());
     }
 
-    public function testSetChoicesResponse()
+    public function testSetCheckboxResponse()
     {
         $choices = $this->getMockForAbstractClass('Egulias\QuizBundle\Model\Questions\QuestionChoices');
         $choices->setChoices(array('1'=> 'yes', 'more'=>'twoanswers', 'not' => 'selected'));
         $choices->setConfig('checkbox');
+
         $question = clone $this->questionMock;
         $question->setType(Question::CHOICE);
         $question->setChoices($choices);
+
         $this->answerMock->setResponse(array('1'=> 'Yes', 'more'=>'TwoAnswers'));
         $responseFactory = new AnswerResponseFactory($this->answerMock, $question);
         $response = $responseFactory->getResponse();
 
-        $this->assertEquals('Yes,TwoAnswers', $response->getValue());
+        $this->assertEquals('Yes,TwoAnswers', $response->getText());
         $this->assertArrayHasKey(1, $response->getRawValue());
         $this->assertArrayHasKey('more', $response->getRawValue());
+    }
+
+    public function testSetRadioResponse()
+    {
+        $choices = $this->getMockForAbstractClass('Egulias\QuizBundle\Model\Questions\QuestionChoices');
+        $choices->setChoices(array('1'=> 'yes', 'more'=>'twoanswers', 'not' => 'selected'));
+
+        $question = clone $this->questionMock;
+        $question->setType(Question::CHOICE);
+        $question->setChoices($choices);
+
+        $this->answerMock->setResponse(array('1'=> 'Yes'));
+        $responseFactory = new AnswerResponseFactory($this->answerMock, $question);
+        $response = $responseFactory->getResponse();
+
+        $this->assertEquals('Yes', $response->getText());
+        $this->assertArrayHasKey(1, $response->getRawValue());
     }
 
     public function testIntermediateTableSetting()
