@@ -18,7 +18,7 @@ interface QuizInterface
      * @param ArrayCollection $questions
      * @access public
      */
-    public function setQuestions(ArrayCollection $questions);
+    public function setQuestions($questions);
     /**
      * getQuestions
      *

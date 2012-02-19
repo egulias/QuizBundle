@@ -34,7 +34,7 @@ abstract class Quiz implements QuizInterface
      * @access public
      * @return Egulias\QuizBundle\Model\Quiz
      */
-    public function setQuestions(ArrayCollection $questions)
+    public function setQuestions($questions)
     {
         $this->questions = $questions;
         return $this;
