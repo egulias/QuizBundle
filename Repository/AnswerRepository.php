@@ -15,6 +15,7 @@ class AnswerRepository extends EntityRepository
           JOIN a.quiz_question qq
           JOIN qq.quiz q
           WHERE q.id = :qid
+          ORDER BY a.created, a.quizUuid
           ')->setParameter('qid', $quizId);
         try {
             return $query->getResult();

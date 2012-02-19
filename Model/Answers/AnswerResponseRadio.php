@@ -12,10 +12,18 @@ use Egulias\QuizBundle\Model\Questions\Question;
  **/
 class AnswerResponseRadio extends AnswerResponse
 {
+    /**
+     * choices
+     *
+     * @var array
+     * @access protected
+     */
+    protected $choices = array();
+
     public function __construct($response, Question $question)
     {
         $this->response = $response;
-        $choices = $question->getChoices()->getChoices();
+        $this->choices = $question->getChoices()->getChoices();
         $this->setValue($response);
         $this->setText($response);
     }
@@ -36,14 +44,11 @@ class AnswerResponseRadio extends AnswerResponse
      * @param array $choice
      * @access public
      * @return Egulias\QuizBundle\Model\Answers\AnswerResponseRadio
-     * @throw \InvalidArgumentException
      */
     public function setText($choice)
     {
-        if (!is_array($choice)) {
-           throw new \InvalidArgumentException('Must be an array');
-        }
-        $this->text = array_pop($choice);
+        $text = $this->choices[$choice];
+        $this->text = $text;
         return $this;
     }
 

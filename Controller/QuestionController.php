@@ -46,6 +46,7 @@ class QuestionController extends Controller
         $questionForm = $this->get('form.factory')->create(new QuestionFormType());
 
         $data = $this->get('request')->get('question');
+        $temp = array();
         foreach ($data['choices'] as $k => $choice) {
             if (!is_int($k))continue;
             $temp[$choice['label']] = $choice;

@@ -27,7 +27,7 @@ abstract class AnswerResponse implements AnswerResponseInterface
     public function __construct($response, QuestionInterface $question)
     {
         $this->response = $response;
-        $this->setText($question->getText());
+        $this->setText($response);
         $this->setValue($response);
     }
 
