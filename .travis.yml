@@ -1,0 +1,5 @@
+language: php
+php:
+  5.3
+env:
+  SYMFONY_VERSION=v2.0.10
