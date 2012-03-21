@@ -8,4 +8,6 @@ env:
   SYMFONY_VERSION=origin/2.0
   SYMFONY_VERSION=origin/master
 
-before_script: bin/vendors install
+before_script: 
+  bin/vendors install
+  phpunit
