@@ -28,11 +28,25 @@ class AnswerResponseRadio extends AnswerResponse
         $this->setText($response);
     }
 
+    /**
+     * setValue
+     *
+     * @param array $value
+     * @access public
+     * @return Egulias\QuizBundle\Model\Answers\AnswerResponseRadio
+     */
     public function setValue($value)
     {
-        $this->value = $value;
+        $this->value = key($value);
+        return $this;
     }
 
+    /**
+     * getValue
+     *
+     * @access public
+     * @return mixed
+     */
     public function getValue()
     {
         return $this->value;
@@ -47,11 +61,16 @@ class AnswerResponseRadio extends AnswerResponse
      */
     public function setText($choice)
     {
-        $text = $this->choices[$choice];
-        $this->text = $text;
+        $this->text = current($choice);
         return $this;
     }
 
+    /**
+     * getText
+     *
+     * @access public
+     * @return string
+     */
     public function getText()
     {
         return $this->text;

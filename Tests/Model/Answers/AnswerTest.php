@@ -65,8 +65,9 @@ class AnswerTest extends \PHPUnit_Framework_TestCase
         $question->setType(Question::CHOICE);
         $question->setChoices($choices);
 
-        $this->answerMock->setResponse(array('1'=> 'Yes'));
-        $responseFactory = new AnswerResponseFactory($this->answerMock, $question);
+        $answer = clone $this->answerMock;
+        $answer->setResponse(array('1'=> 'Yes'));
+        $responseFactory = new AnswerResponseFactory($answer, $question);
         $response = $responseFactory->getResponse();
 
         $this->assertEquals('Yes', $response->getText());
