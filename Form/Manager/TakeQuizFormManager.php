@@ -72,8 +72,24 @@ class TakeQuizFormManager
             $qQuestions = $form->getData()->getQuestions();
             foreach ($qQuestions as  $qq) {
                 $formAnswer = $qq->getAnswer();
+
                 $quizQuestion = $this->em->getRepository('EguliasQuizBundle:QuizQuestion')
                     ->findOneBy(array('id' => $qq->getId()));
+
+                $q = $quizQuestion->getQuestion();
+                $type = $q->getType();
+                if ($type == 'choice') {
+                    $choices = $q->getChoices();
+                    if ($choices->getType() == 'radio') {
+                        //Compatible with PHP 5.3.x
+                        $choices = $choices->getChoices();
+                        $formAnswer->setResponse(
+                            array(
+                                $formAnswer->getResponse() => $choices[$formAnswer->getResponse()]
+                            )
+                        );
+                    }
+                }
                 $formAnswer->setQuizUuid($uuid);
                 $formAnswer->setQuizQuestion($quizQuestion);
                 $this->em->persist($formAnswer);
