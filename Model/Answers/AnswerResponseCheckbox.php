@@ -44,7 +44,7 @@ class AnswerResponseCheckbox extends AnswerResponse
      * getValue
      *
      * @access public
-     * @return string
+     * @return array
      */
     public function getValue()
     {
@@ -69,6 +69,12 @@ class AnswerResponseCheckbox extends AnswerResponse
         return $this;
     }
 
+    /**
+     * getText
+     *
+     * @access public
+     * @return string
+     */
     public function getText()
     {
         return $this->text;
