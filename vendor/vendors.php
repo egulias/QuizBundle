@@ -17,6 +17,7 @@ $deps = array(
     array('doctrine-common', 'git://github.com/doctrine/common.git', 'origin/master'),
     array('doctrine-dbal', 'git://github.com/doctrine/dbal.git', 'origin/master'),
     array('doctrine', 'git://github.com/doctrine/doctrine2.git', 'origin/master'),
+    array('symfony-form', 'https://github.com/symfony/Form.git', 'origin/master'),
 );
 
 foreach ($deps as $dep) {
@@ -25,6 +26,9 @@ foreach ($deps as $dep) {
     echo "> Installing/Updating $name\n";
 
     $installDir = $vendorDir.'/'.$name;
+    if ($name == 'symfony-form') {
+        $installDir = $vendorDir . '/symfony/Symfony/Component/Form';
+    }
     if (!is_dir($installDir)) {
         $return = null;
         system(sprintf('git clone -q %s %s', escapeshellarg($url), escapeshellarg($installDir)), $return);
