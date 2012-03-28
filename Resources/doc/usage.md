@@ -20,6 +20,7 @@ Two services are available with the bundle (a third is planned for managing ques
 
 - egulias.quiz.manager
 - egulias.take.quiz
+- egulias.question.manager (not yet available, see [#10](https://github.com/egulias/EguliasQuizBundle/issues/10))
 
 1. egulias.quiz.manager
 
