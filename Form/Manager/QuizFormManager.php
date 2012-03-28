@@ -1,5 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
 namespace Egulias\QuizBundle\Form\Manager;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -47,18 +46,18 @@ class QuizFormManager
         $params = $this->request->get('quiz');
 
         $questions = array();
-        if(isset($params['questions'])) {
+        if (isset($params['questions'])) {
             $questions = $params['questions'];
             unset($params['questions']);
         }
 
         $form->bind($params);
-        if(!$form->isValid())return $form;
+        if (!$form->isValid())return $form;
 
         $quiz = $form->getData();
         $this->em->persist($quiz);
 
-        foreach($questions as $question)
+        foreach ($questions as $question)
         {
             $question = $this->em->getRepository('EguliasQuizBundle:Question')
                 ->findOneBy(array('id' => $question['question']));
@@ -71,6 +70,7 @@ class QuizFormManager
 
         return $form;
     }
+
     /**
      *  Allows the edition of a Quiz based on its ID
      *
@@ -83,7 +83,7 @@ class QuizFormManager
         $id = intval($id);
 
         $repo = $this->em->getRepository('EguliasQuizBundle:Quiz');
-        if(!$quiz = $repo->findOneBy(array('id' => $id))) {
+        if (!$quiz = $repo->findOneBy(array('id' => $id))) {
             throw new \InvalidArgumentException("Invalid Quiz ID. Value given $id ");
         }
 
@@ -105,7 +105,7 @@ class QuizFormManager
         $id = intval($id);
         try {
             //Quiz from DB
-            if(!$quiz = $this->em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id' => $id))) {
+            if (!$quiz = $this->em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id' => $id))) {
                 throw new \InvalidArgumentException("Invalid Quiz ID. Value given $id ");
             }
             //Form raw data
@@ -115,7 +115,7 @@ class QuizFormManager
             $form->setData($quiz);
             $form->bind($rawData);
 
-            if(!$form->isValid())return $form;
+            if (!$form->isValid())return $form;
 
             $quizForm = $form->getData();
             //Question submited in the form
@@ -129,9 +129,9 @@ class QuizFormManager
             }
             $this->em->persist($quizForm);
             //Delete Questions
-            foreach($formQuestions as $key => &$question)
+            foreach ($formQuestions as $key => &$question)
             {
-                if(isset($rawData['questions'][$key]['delete'])) {
+                if (isset($rawData['questions'][$key]['delete'])) {
                     $this->em->remove($quizQuestions[$key]);
                 }
             }

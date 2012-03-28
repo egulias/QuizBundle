@@ -1,5 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
 namespace Egulias\QuizBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,

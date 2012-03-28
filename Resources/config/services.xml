@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="egulias_quiz_manager.class">Egulias\QuizBundle\Form\Manager\QuizFormManager</parameter>
         <parameter key="egulias_take_quiz_manager.class">Egulias\QuizBundle\Form\Manager\TakeQuizFormManager</parameter>
+        <parameter key="egulias_question_manager.class">Egulias\QuizBundle\Form\Manager\QuestionFormManager</parameter>
     </parameters>
 
     <services>
@@ -16,6 +17,11 @@
             <argument type="service" id="form.factory" />
         </service>
         <service id="egulias.take.quiz" class="%egulias_take_quiz_manager.class%" scope="request">
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="form.factory" />
+        </service>
+        <service id="egulias.question" class="%egulias_question_manager.class%" scope="request">
             <argument type="service" id="request" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="form.factory" />
