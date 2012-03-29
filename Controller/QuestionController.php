@@ -32,7 +32,7 @@ class QuestionController extends Controller
      */
     public function createQuestionAction()
     {
-        $q = $this->get('form.factory')->create(new QuestionFormType());
+        $q = $this->get('egulias.question.manager')->getQuestionForm();//$this->get('form.factory')->create(new QuestionFormType());
         return $this->render('EguliasQuizBundle:Question:questionForm.html.twig', array('form' => $q->createView()));
     }
 
@@ -42,22 +42,8 @@ class QuestionController extends Controller
      */
     public function saveQuestionAction()
     {
-        $questionForm = $this->get('form.factory')->create(new QuestionFormType());
-
-        $data = $this->get('request')->get('question');
-        $temp = array();
-        foreach ($data['choices'] as $k => $choice) {
-            if (!is_int($k))continue;
-            $temp[$choice['label']] = $choice;
-            unset($data['choices'][$k]);
-        }
-        $data['choices']['choices'] = $temp;
-        $questionForm->bind($data);
-        $em = $this->get('doctrine')->getEntityManager();
-        $em->persist($questionForm->getData());
-        $em->flush();
+        $this->get('egulias.question.manager')->saveQuestion();
         return $this->redirect($this->generateUrl('egulias_quiz_question'));
-
     }
 
     /**
