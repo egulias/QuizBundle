@@ -3,28 +3,47 @@
 namespace Egulias\QuizBundle\Form\Manager;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Doctrine\ORM\EntityManager;
 
 use Egulias\QuizBundle\Form\Type\GenericQuizFormType as QuizForm;
 use Egulias\QuizBundle\Entity\Answer;
+use Egulias\QuizBundle\Event\QuizEvents;
+use Egulias\QuizBundle\Event\FilterQuizEvent;
 use Doctrine\Common\Util\Debug;
 /**
+ * Class to manage Quiz submission and responses
  *
- * @author Eduardo Gulias Davis <me@egulias.com>
- * @package EguliasQuizBundle
+ * @package    EguliasQuizBundle
  * @subpackage Form
+ * @author     Eduardo Gulias Davis <me@egulias.com>
  */
 class TakeQuizFormManager
 {
-    protected $em = NULL;
-    protected $request = NULL;
-    protected $formFactory = NULL;
+    protected $em = null;
+    protected $request = null;
+    protected $formFactory = null;
+    protected $dispatcher = null;
 
 
-    public function __construct(Request $request, $em, $formFactory)
-    {
+    /**
+     * @param Request         $request     The Request taking place
+     * @param EntityManager   $em          The current em
+     * @param FormFactory     $formFactory The from factory for creating the forms
+     * @param EventDispatcher $dispatcher  For custom events
+     *
+     */
+    public function __construct(
+        Request $request,
+        EntityManager $em,
+        FormFactory $formFactory,
+        EventDispatcher $dispatcher
+    ) {
         $this->em = $em;
         $this->request = $request;
         $this->formFactory = $formFactory;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -51,14 +70,15 @@ class TakeQuizFormManager
         }
         catch (\Exception $e)
         {
-            throw new \Exception($e->getMessage(),0, $e);
+            throw new \Exception($e->getMessage(), 0, $e);
         }
     }
 
     /**
      * Saves Quiz responses
      *
-     * @param int $id
+     * @param int $id Quiz ID
+     *
      * @return Egulias\QuizBundle\Form\Type\GenericQuizFormType $form
      * @throw \Exception
      */
@@ -70,6 +90,9 @@ class TakeQuizFormManager
             $form = $this->takeQuiz($id);
             $form->bindRequest($this->request);
             $qQuestions = $form->getData()->getQuestions();
+            //quiz.response event
+            $event = new FilterQuizEvent($quiz);
+            $this->dispatcher->dispatch(QuizEvents::onQuizResponse, $event);
             foreach ($qQuestions as  $qq) {
                 $formAnswer = $qq->getAnswer();
 

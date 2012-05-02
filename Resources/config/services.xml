@@ -20,6 +20,7 @@
             <argument type="service" id="request" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="form.factory" />
+            <argument type="service" id="event_dispatcher" />
         </service>
         <service id="egulias.question.manager" class="%egulias_question_manager.class%" scope="request">
             <argument type="service" id="request" />
