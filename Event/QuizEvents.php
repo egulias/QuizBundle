@@ -5,7 +5,9 @@ namespace Egulias\QuizBundle\Event;
 /**
  * QuizEvents
  *
- * @author Eduardo Gulias Davis <me@egulias.com>
+ * @package    EguliasQuizBundle
+ * @subpackage Event
+ * @author     Eduardo Gulias Davis <me@egulias.com>
  */
 final class QuizEvents
 {
