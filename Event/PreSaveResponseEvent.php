@@ -16,7 +16,7 @@ use Egulias\QuizBundle\Model\Answers\Answer;
  * @author     Eduardo Gulias Davis <me@egulias.com>
  *
  */
-class FilterQuizEvent extends Event
+class PreSaveResponseQuizEvent extends Event
 {
     protected $quiz;
     protected $qq;

@@ -18,6 +18,6 @@ final class QuizEvents
      *
      *  @var
      */
-    const RESPONSE = 'egulias.quiz.response';
+    const PRE_SAVE_RESPONSE = 'egulias.quiz.pre_save_response';
 
 }
