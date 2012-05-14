@@ -18,6 +18,6 @@ final class QuizEvents
      *
      *  @var
      */
-    const onQuizResponse = 'egulias.quiz.response';
+    const RESPONSE = 'egulias.quiz.response';
 
 }

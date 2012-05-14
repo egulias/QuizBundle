@@ -90,9 +90,12 @@ class TakeQuizFormManager
             $form = $this->takeQuiz($id);
             $form->bindRequest($this->request);
             $qQuestions = $form->getData()->getQuestions();
+
             //quiz.response event
             $event = new FilterQuizEvent($quiz);
-            $this->dispatcher->dispatch(QuizEvents::onQuizResponse, $event);
+            $this->dispatcher->dispatch(QuizEvents::RESPONSE, $event);
+            $qQuestions = $event->getQuestions();
+
             foreach ($qQuestions as  $qq) {
                 $formAnswer = $qq->getAnswer();
 

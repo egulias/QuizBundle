@@ -5,6 +5,7 @@ namespace Egulias\QuizBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 
 use Egulias\QuizBundle\Model\Quizes\Quiz;
+use Egulias\QuizBundle\Model\Quizes\QuizQuestion;
 use Egulias\QuizBundle\Model\Answers\Answer;
 
 /**
@@ -18,11 +19,20 @@ use Egulias\QuizBundle\Model\Answers\Answer;
 class FilterQuizEvent extends Event
 {
     protected $quiz;
-    protected $answers;
+    protected $qq;
 
-    public function __construct(Quiz $quiz)
+    /**
+     * __construct
+     *
+     * @param Quiz         $quiz Current Quiz
+     * @param QuizQuestion $qq   Questions from the form
+     *
+     * @return void
+     */
+    public function __construct(Quiz $quiz, QuizQuestion $qq)
     {
         $this->quiz = $quiz;
+        $this->qq = $qq;
     }
 
     /**
@@ -33,6 +43,16 @@ class FilterQuizEvent extends Event
     public function getQuiz()
     {
         return $this->quiz;
+    }
+
+    /**
+     * getQuizQuestion
+     *
+     * @return QuizQuestion
+     */
+    public function getQuizQuestion()
+    {
+        return $this->qq;
     }
 
 }
