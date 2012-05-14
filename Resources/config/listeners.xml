@@ -4,7 +4,7 @@
       xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
     <parameters>
-        <parameter key="egulias_answer_events.class">Egulias\QuizBundle\Listener\Doctrine\AnswerEvents</parameter>
+        <parameter key="egulias_answer_events.class">Egulias\QuizBundle\EventListener\Doctrine\AnswerEvents</parameter>
     </parameters>
 
     <services>

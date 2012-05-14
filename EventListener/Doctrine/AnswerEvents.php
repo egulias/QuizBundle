@@ -1,6 +1,6 @@
 <?php
 
-namespace Egulias\QuizBundle\Listener\Doctrine;
+namespace Egulias\QuizBundle\EventListener\Doctrine;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Egulias\QuizBundle\Model\Answers\Answer;
