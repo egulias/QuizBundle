@@ -16,23 +16,26 @@ use Egulias\QuizBundle\Model\Answers\Answer;
  * @author     Eduardo Gulias Davis <me@egulias.com>
  *
  */
-class PreSaveResponseQuizEvent extends Event
+class PreSaveQuizResponseEvent extends Event
 {
     protected $quiz;
     protected $qq;
+    protected $answers;
 
     /**
      * __construct
      *
-     * @param Quiz         $quiz Current Quiz
-     * @param QuizQuestion $qq   Questions from the form
+     * @param Quiz         $quiz    Current Quiz
+     * @param QuizQuestion $qq      Questions from the form
+     * @param array        $answers Answers normalized
      *
      * @return void
      */
-    public function __construct(Quiz $quiz, QuizQuestion $qq)
+    public function __construct(Quiz $quiz, QuizQuestion $qq, array $answers)
     {
         $this->quiz = $quiz;
         $this->qq = $qq;
+        $this->answers = $answers;
     }
 
     /**
@@ -53,6 +56,16 @@ class PreSaveResponseQuizEvent extends Event
     public function getQuizQuestion()
     {
         return $this->qq;
+    }
+
+    /**
+     * getAnswers
+     *
+     * @return array
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
     }
 
 }
