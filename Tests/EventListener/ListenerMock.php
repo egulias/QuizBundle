@@ -4,8 +4,8 @@ namespace Egulias\QuizBundle\Tests\EventListener;
 
 class ListenerMock
 {
-    public function PreSaveQuizResponse()
+    public function preSaveResponse($event)
     {
-
+       $event->getQuizQuestion()->setId(1);
     }
 }

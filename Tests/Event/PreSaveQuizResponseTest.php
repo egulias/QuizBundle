@@ -4,6 +4,7 @@ namespace Egulias\QuizBundle\Tests\Event;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Egulias\QuizBundle\Event\PreSaveQuizResponseEvent;
+use Egulias\QuizBundle\Event\QuizEvents;
 use Egulias\QuizBundle\Tests\EventListener\ListenerMock;
 
 class PreSaveQuizResponseTest extends \PHPUnit_Framework_TestCase
@@ -26,9 +27,13 @@ class PreSaveQuizResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\Component\EventDispatcher\Event', $event);
     }
 
-    public function testEventAddedAndDispatched()
+    public function testListenerAddedAndDispatched()
     {
+        $listener = new ListenerMock();
+        $event = new PreSaveQuizResponseEvent($this->quiz, $this->qq, array());
         $dispatcher = new EventDispatcher();
-        $dispatcher->add($event);
+        $dispatcher->addListener(QuizEvents::PRE_SAVE_RESPONSE, array($listener, 'preSaveResponse'));
+        $dispatcher->dispatch(QuizEvents::PRE_SAVE_RESPONSE, $event);
+        $this->assertEquals(1,$event->getQuizQuestion()->getId());
     }
 }
