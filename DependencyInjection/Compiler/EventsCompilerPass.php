@@ -29,9 +29,25 @@ class EventsCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition('event_dispatcher');
 
         foreach ($container->findTaggedServiceIds('egulias.event_listener') as $id => $attributes) {
+            $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+
+            if (!isset($attributes[0]['event'])) {
+                throw new \InvalidArgumentException(
+                    sprintf('El servicio "%s" debe de definir el atributo "event" en los tags "desymfony_user.event_listener".', $id)
+                );
+            }
+
+            if (!isset($attributes[0]['method'])) {
+                throw new \InvalidArgumentException(
+                    sprintf('Service "%s" debe de definir el atributo "method" en los tags "desymfony_user.event_listener".', $id)
+                );
+            }
             $definition->addMethodCall(
                 'addListener',
-                array(QuizEvents::onQuizResponse,array(new Reference($id),$attributes[0]['method']))
+                array(
+                  $attributes[0]['method'],
+                  array(new Reference($id), $attributes[0]['method'], $priority)
+                )
             );
         }
     }

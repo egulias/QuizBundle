@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Egulias\QuizBundle\Form\Type\GenericQuizFormType as QuizForm;
 use Egulias\QuizBundle\Entity\Answer;
 use Egulias\QuizBundle\Event\QuizEvents;
-use Egulias\QuizBundle\Event\FilterQuizEvent;
+use Egulias\QuizBundle\Event\PreSaveQuizResponseEvent;
 use Doctrine\Common\Util\Debug;
 /**
  * Class to manage Quiz submission and responses
@@ -64,7 +64,7 @@ class TakeQuizFormManager
                 $question->setAnswer(new Answer());
             }
 
-            $form = $this->formFactory->create(new QuizForm(),$quiz );
+            $form = $this->formFactory->create(new QuizForm(), $quiz);
             return $form;
 
         }
@@ -90,11 +90,7 @@ class TakeQuizFormManager
             $form = $this->takeQuiz($id);
             $form->bindRequest($this->request);
             $qQuestions = $form->getData()->getQuestions();
-
-            //quiz.response event
-            $event = new FilterQuizEvent($quiz);
-            $this->dispatcher->dispatch(QuizEvents::RESPONSE, $event);
-            $qQuestions = $event->getQuestions();
+            $answers = array();
 
             foreach ($qQuestions as  $qq) {
                 $formAnswer = $qq->getAnswer();
@@ -119,16 +115,31 @@ class TakeQuizFormManager
                 $formAnswer->setQuizUuid($uuid);
                 $formAnswer->setQuizQuestion($quizQuestion);
                 $this->em->persist($formAnswer);
+                $answers[] = $formAnswer;
 
             }
+            //quiz.response event
+            $event = new PreSaveQuizResponseEvent($quiz, $qQuestions, $answers);
+            $this->dispatcher->dispatch(QuizEvents::PRE_SAVE_RESPONSE, $event);
+
             $this->em->flush();
         }
         catch (\Exception $e) {
-            throw new \Exception($e->getMessage(),0, $e);
+            throw new \Exception($e->getMessage(), 0, $e);
         }
-         return $form;
+        $event = new PostSaveResponseQuizEvent($quiz, $qQuestions);
+        $this->dispatcher->dispatch(QuizEvents::POST_SAVE_RESPONSE, $event);
+
+        return $form;
     }
 
+    /**
+     * getQuiz
+     *
+     * @param int $id Quiz ID
+     *
+     * @return Quiz
+     */
     private function getQuiz($id)
     {
         if (!$quiz = $this->em->getRepository('EguliasQuizBundle:Quiz')->findOneBy(array('id'=> $id))) {
