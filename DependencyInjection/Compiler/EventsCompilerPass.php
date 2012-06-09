@@ -28,7 +28,7 @@ class EventsCompilerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('event_dispatcher');
 
-        foreach ($container->findTaggedServiceIds('egulias.event_listener') as $id => $attributes) {
+        foreach ($container->findTaggedServiceIds('egulias.quiz.event_listener') as $id => $attributes) {
             $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
 
             if (!isset($attributes[0]['event'])) {
@@ -45,7 +45,7 @@ class EventsCompilerPass implements CompilerPassInterface
             $definition->addMethodCall(
                 'addListenerService',
                 array(
-                  $attributes[0]['method'],
+                  $attributes[0]['event'],
                   array($id, $attributes[0]['method'])
                   , $priority
                 )
