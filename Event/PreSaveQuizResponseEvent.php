@@ -19,22 +19,19 @@ use Egulias\QuizBundle\Model\Answers\Answer;
 class PreSaveQuizResponseEvent extends Event
 {
     protected $quiz;
-    protected $qq;
     protected $answers;
 
     /**
      * __construct
      *
-     * @param Quiz         $quiz    Current Quiz
-     * @param QuizQuestion $qq      Questions from the form
-     * @param array        $answers Answers normalized
+     * @param Quiz  $quiz    Current Quiz
+     * @param array $answers Answers normalized
      *
      * @return void
      */
-    public function __construct(Quiz $quiz, QuizQuestion $qq, array $answers)
+    public function __construct(Quiz $quiz, array $answers)
     {
         $this->quiz = $quiz;
-        $this->qq = $qq;
         $this->answers = $answers;
     }
 

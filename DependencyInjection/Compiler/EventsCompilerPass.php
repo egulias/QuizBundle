@@ -33,20 +33,21 @@ class EventsCompilerPass implements CompilerPassInterface
 
             if (!isset($attributes[0]['event'])) {
                 throw new \InvalidArgumentException(
-                    sprintf('El servicio "%s" debe de definir el atributo "event" en los tags "desymfony_user.event_listener".', $id)
+                    sprintf('Service "%s" must define "event" attribute in "desymfony_user.event_listener" tags.', $id)
                 );
             }
 
             if (!isset($attributes[0]['method'])) {
                 throw new \InvalidArgumentException(
-                    sprintf('Service "%s" debe de definir el atributo "method" en los tags "desymfony_user.event_listener".', $id)
+                    sprintf('Service "%s" must define "method" attribute in "desymfony_user.event_listener" tags.', $id)
                 );
             }
             $definition->addMethodCall(
-                'addListener',
+                'addListenerService',
                 array(
                   $attributes[0]['method'],
-                  array(new Reference($id), $attributes[0]['method'], $priority)
+                  array($id, $attributes[0]['method'])
+                  , $priority
                 )
             );
         }
