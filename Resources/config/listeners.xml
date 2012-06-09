@@ -4,12 +4,14 @@
       xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
     <parameters>
-        <parameter key="egulias_answer_events.class">Egulias\QuizBundle\EventListener\Doctrine\AnswerEvents</parameter>
+        <parameter key="egulias_quiz_events.class">Egulias\QuizBundle\EventListener\QuizListener</parameter>
     </parameters>
 
     <services>
-        <service id="egulias.answer.listener" class="%egulias_answer_events.class%">
-          <tag name="doctrine.event_listener" event="prePersist" />
+        <service id="egulias.quiz.listener" class="%egulias_quiz_events.class%">
+          <tag name="egulias.quiz.event_listener" event="egulias.quiz.pre_save_response"
+            method="onPreSaveResponse" priority="2048" />
         </service>
     </services>
+
 </container>

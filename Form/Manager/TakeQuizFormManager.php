@@ -95,10 +95,7 @@ class TakeQuizFormManager
             foreach ($qQuestions as  $qq) {
                 $formAnswer = $qq->getAnswer();
 
-                $quizQuestion = $this->em->getRepository('EguliasQuizBundle:QuizQuestion')
-                    ->findOneBy(array('id' => $qq->getId()));
-
-                $q = $qq->getQuestion();//$quizQuestion->getQuestion();
+                $q = $qq->getQuestion();
                 $type = $q->getType();
                 if ($type == 'choice') {
                     $choices = $q->getChoices();
@@ -113,16 +110,15 @@ class TakeQuizFormManager
                     }
                 }
                 $formAnswer->setQuizUuid($uuid);
-                $formAnswer->setQuizQuestion($quizQuestion);
+                $formAnswer->setQuizQuestion($qq);
                 $answers[] = $formAnswer;
+                $this->em->persist($formAnswer);
             }
+
             //quiz.response event
             $event = new PreSaveQuizResponseEvent($quiz, $answers);
             $this->dispatcher->dispatch(QuizEvents::PRE_SAVE_RESPONSE, $event);
 
-            foreach ($answers as $answer) {
-                $this->em->persist($answer);
-            }
             $this->em->flush();
         }
         catch (\Exception $e) {

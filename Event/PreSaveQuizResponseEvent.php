@@ -46,16 +46,6 @@ class PreSaveQuizResponseEvent extends Event
     }
 
     /**
-     * getQuizQuestion
-     *
-     * @return QuizQuestion
-     */
-    public function getQuizQuestion()
-    {
-        return $this->qq;
-    }
-
-    /**
      * getAnswers
      *
      * @return array
