@@ -7,6 +7,12 @@ that every time a Quiz is instantiated to be answered is a different Quiz.
 
 [Detailed installation instructions] (http://github.com/egulias/EguliasQuizBundle/blob/dev/Resources/doc/installation.md)
 
+
+You can use this bundle to create from simple polls to complete quizes for your site or organization. Ideas and
+improvements are welcome.
+
+This bundle is under active development.
+
 [![Build
 Status](https://secure.travis-ci.org/egulias/EguliasQuizBundle.png)](http://travis-ci.org/egulias/EguliasQuizBundle)
 
