@@ -2,18 +2,18 @@
 
 namespace Egulias\QuizBundle\EventListener;
 
-use Symfony\Component\EventDispatcher\Event;
+use Egulias\QuizBundle\Event\PreSaveQuizResponseEvent;
 use Egulias\QuizBundle\Model\Answers\Answer;
 use Egulias\QuizBundle\Model\Answers\AnswerResponseFactory;
 
 class QuizListener
 {
-    public function onPreSaveResponse($event)
+    public function onPreSaveResponse(PreSaveQuizResponseEvent $event)
     {
-        $a = $event->getAnswers();
-        foreach ($a as $answer) {
-            $factory = new AnswerResponseFactory($a[0], $a[0]->getQuizQuestion()->getQuestion());
-            $a[0]->setResponse($factory->getResponse());
+        $answers = $event->getAnswers();
+        foreach ($answers as $answer) {
+            $factory = new AnswerResponseFactory($answer, $answer->getQuizQuestion()->getQuestion());
+            $answer->setResponse($factory->getResponse());
         }
     }
 }
