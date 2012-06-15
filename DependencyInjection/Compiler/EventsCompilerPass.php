@@ -28,28 +28,31 @@ class EventsCompilerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('event_dispatcher');
 
-        foreach ($container->findTaggedServiceIds('egulias.quiz.event_listener') as $id => $attributes) {
-            $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+        foreach ($container->findTaggedServiceIds('egulias.quiz.event_listener') as $id => $events) {
+            foreach ($events as $event)
+            {
+                $priority = isset($event['priority']) ? $event['priority'] : 0;
 
-            if (!isset($attributes[0]['event'])) {
-                throw new \InvalidArgumentException(
-                    sprintf('Service "%s" must define "event" attribute in "desymfony_user.event_listener" tags.', $id)
+                if (!isset($event['event'])) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Service "%s" must define "event" attribute in "desymfony_user.event_listener" tags.', $id)
+                    );
+                }
+
+                if (!isset($event['method'])) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Service "%s" must define "method" attribute in "desymfony_user.event_listener" tags.', $id)
+                    );
+                }
+                $definition->addMethodCall(
+                    'addListenerService',
+                    array(
+                        $event['event'],
+                        array($id, $event['method'])
+                        , $priority
+                    )
                 );
             }
-
-            if (!isset($attributes[0]['method'])) {
-                throw new \InvalidArgumentException(
-                    sprintf('Service "%s" must define "method" attribute in "desymfony_user.event_listener" tags.', $id)
-                );
-            }
-            $definition->addMethodCall(
-                'addListenerService',
-                array(
-                  $attributes[0]['event'],
-                  array($id, $attributes[0]['method'])
-                  , $priority
-                )
-            );
         }
     }
 }

@@ -25,6 +25,5 @@ class EguliasQuizExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('listeners.xml');
-        $loader->load('listeners2.xml');
     }
 }
